@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package client;
+
+option go_package = "node/client";
+
+message Client {
+    
+}
