@@ -18,7 +18,7 @@ type Ecdsa struct {
 	Auth
 }
 
-func NewEcdsa(curve elliptic.Curve, hashMethod hash.Type) Auth {
+func NewEcdsa(curve elliptic.Curve, hashMethod hash.Type) Ecdsa {
 	return Ecdsa{curve: curve}
 }
 
