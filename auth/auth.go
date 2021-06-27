@@ -1,7 +1,9 @@
 package auth
 
 import (
+	"alcor/auth/hash"
 	"crypto/ecdsa"
+	"crypto/elliptic"
 	"math/big"
 )
 
@@ -16,4 +18,8 @@ type Auth interface {
 	DeserializePublicKey([]byte) (*ecdsa.PublicKey, error)
 	SerializeSignature(*big.Int, *big.Int) ([]byte, error)
 	DeserializeSignature([]byte) (*big.Int, *big.Int, error)
+}
+
+func NewP384() Auth {
+	return NewEcdsa(elliptic.P384(), hash.SHA512)
 }
