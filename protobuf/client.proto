@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package client;
+
+option go_package = "./client";
+
+message GetRequest {
+    bytes ID = 1;
+}
+
+message Client {
+    bytes ID = 1;
+    bytes PubKey = 2;
+}

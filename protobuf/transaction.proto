@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package transaction;
+
+option go_package = "./transaction";
+
+message GetRequest {
+    bytes Hash = 1;
+}
+
+message EnrollRequest {
+    bytes Message = 2;
+    bytes From = 4;
+}
+
+message EnrollResponse {
+    bytes Hash = 1;
+    bytes Message = 2;
+    bytes Timestamp = 3;
+    bytes From = 4;
+    repeated bytes Befores = 5;
+}
+
+message Transaction {
+    bytes Hash = 1;
+    bytes Message = 2;
+    bytes Timestamp = 3;
+    bytes From = 4;
+    repeated bytes Befores = 5;
+    bytes Signature = 6;
+}
