@@ -20,6 +20,8 @@ type Auth interface {
 	DeserializeSignature([]byte) (*big.Int, *big.Int, error)
 }
 
+var Basis = NewP384()
+
 func NewP384() Auth {
 	return NewEcdsa(elliptic.P384(), hash.SHA512)
 }
