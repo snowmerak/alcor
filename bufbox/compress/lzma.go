@@ -41,3 +41,7 @@ func ReadLZMA2(data []byte) ([]byte, error) {
 	}
 	return buf.Bytes(), nil
 }
+
+func LZMA2() (func([]byte) ([]byte, error), func([]byte) ([]byte, error)) {
+	return WriteLZMA2, ReadLZMA2
+}

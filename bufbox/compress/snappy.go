@@ -41,3 +41,7 @@ func ReadSnappy(data []byte) ([]byte, error) {
 	}
 	return buf.Bytes(), nil
 }
+
+func Snappy() (func([]byte) ([]byte, error), func([]byte) ([]byte, error)) {
+	return WriteSnappy, ReadSnappy
+}

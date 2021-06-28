@@ -41,3 +41,7 @@ func ReadBrotli(data []byte) ([]byte, error) {
 	}
 	return buf.Bytes(), nil
 }
+
+func Brotli() (func([]byte) ([]byte, error), func([]byte) ([]byte, error)) {
+	return WriteBrotli, ReadBrotli
+}
