@@ -6,7 +6,7 @@ import (
 )
 
 type Signal struct {
-	in int8
+	state int8
 }
 
 func BenchmarkValue(b *testing.B) {
