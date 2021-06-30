@@ -1,11 +1,27 @@
 package wsstream
 
 import (
+	"sync"
+
 	"github.com/gorilla/websocket"
 )
 
 type WSStream struct {
 	actions map[int8]func(conn *websocket.Conn, typ int, message []byte) (int8, error)
+	mutex   sync.RWMutex
+}
+
+func New() WSStream {
+	return WSStream{
+		actions: map[int8]func(conn *websocket.Conn, typ int, message []byte) (int8, error){},
+		mutex:   sync.RWMutex{},
+	}
+}
+
+func (w *WSStream) AddAction(state int8, action func(conn *websocket.Conn, typ int, message []byte) (int8, error)) {
+	w.mutex.Lock()
+	defer w.mutex.Unlock()
+	w.actions[state] = action
 }
 
 func (w *WSStream) Connect(url string) error {

@@ -1,4 +1,4 @@
-package wsstation_test
+package wshub_test
 
 import (
 	"sync"

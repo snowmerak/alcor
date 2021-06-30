@@ -1,4 +1,4 @@
-package wsstation
+package wshub
 
 import "sync"
 
