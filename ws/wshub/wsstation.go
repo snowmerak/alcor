@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type WSStation struct {
+type WSHub struct {
 	actions   map[int8]func(conn *websocket.Conn) error
 	sessions  Sessions
 	mutex     sync.RWMutex
@@ -18,7 +18,7 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool { return true },
 }
 
-func (w *WSStation) Open(rw http.ResponseWriter, r *http.Request) error {
+func (w *WSHub) Open(rw http.ResponseWriter, r *http.Request) error {
 	conn, err := upgrader.Upgrade(rw, r, nil)
 	if err != nil {
 		return err

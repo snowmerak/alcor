@@ -3,12 +3,12 @@ package wshub
 import "github.com/gorilla/websocket"
 
 type WSStationWrapper struct {
-	wsstation *WSStation
+	wsstation *WSHub
 }
 
 func New() *WSStationWrapper {
 	return &WSStationWrapper{
-		wsstation: &WSStation{},
+		wsstation: &WSHub{},
 	}
 }
 
@@ -26,6 +26,6 @@ func (w *WSStationWrapper) SetOnConnect(state int8) *WSStationWrapper {
 	return w
 }
 
-func (w *WSStationWrapper) Unwarp() *WSStation {
+func (w *WSStationWrapper) Unwarp() *WSHub {
 	return w.wsstation
 }
