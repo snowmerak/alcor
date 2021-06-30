@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package statestream;
+
+option go_package = "./statestream";
+
+message State {
+    enum Type {
+
+    }
+    Type type = 1;
+    enum Action {
+
+    }
+    Action action = 2;
+    enum Date {
+    
+    }
+}
