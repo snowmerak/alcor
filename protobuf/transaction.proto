@@ -9,8 +9,8 @@ message GetRequest {
 }
 
 message EnrollRequest {
-    bytes Message = 2;
-    bytes From = 4;
+    bytes Message = 1;
+    bytes From = 2;
 }
 
 message EnrollResponse {
