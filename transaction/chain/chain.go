@@ -1,4 +1,4 @@
-package tangle
+package chain
 
 import (
 	"alcor/bufbox"
