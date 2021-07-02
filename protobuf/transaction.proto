@@ -26,6 +26,6 @@ message Transaction {
     bytes Message = 2;
     bytes Timestamp = 3;
     bytes From = 4;
-    repeated bytes Befores = 5;
+    bytes Befores = 5;
     bytes Signature = 6;
 }
