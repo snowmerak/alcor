@@ -57,3 +57,19 @@ func (b *BufBox) Put(name []byte, content []byte) error {
 	}
 	return os.WriteFile(b.nameToPath(name), content, 0o770)
 }
+
+func (b *BufBox) List() ([][]byte, error) {
+	list, err := os.ReadDir(b.directory)
+	if err != nil {
+		return nil, err
+	}
+	rs := [][]byte{}
+	for _, l := range list {
+		bs, err := hex.DecodeString(l.Name())
+		if err != nil {
+			continue
+		}
+		rs = append(rs, bs)
+	}
+	return rs, nil
+}
