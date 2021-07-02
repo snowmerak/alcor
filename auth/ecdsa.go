@@ -15,7 +15,6 @@ import (
 type Ecdsa struct {
 	curve      elliptic.Curve
 	hashMethod hash.Type
-	Auth
 }
 
 func NewEcdsa(curve elliptic.Curve, hashMethod hash.Type) Ecdsa {
