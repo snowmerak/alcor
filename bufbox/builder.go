@@ -1,12 +1,15 @@
 package bufbox
 
-import "alcor/bufbox/csset"
+import (
+	"alcor/bufbox/csset"
+)
 
 type BufBoxWrapper struct {
 	bufBox *BufBox
 }
 
 func (b *BufBoxWrapper) Unwrap() *BufBox {
+	Mkdir(b.bufBox.directory)
 	b.bufBox.cacheSet = csset.CSSet{}
 	return b.bufBox
 }
