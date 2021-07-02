@@ -4,11 +4,12 @@ import (
 	"alcor/bufbox"
 	"alcor/transaction"
 	"math/rand"
+	"path/filepath"
 
 	"google.golang.org/protobuf/proto"
 )
 
-const Path = "./db/transactions"
+var Path = filepath.Join(".", "db", "tangle")
 
 var store *bufbox.BufBox
 
