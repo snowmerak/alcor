@@ -8,10 +8,11 @@ import (
 )
 
 type WSHub struct {
-	actions   map[int8]func(conn *websocket.Conn) error
-	sessions  Sessions
-	mutex     sync.RWMutex
-	onConnect *int8
+	actions      map[int8]func(conn *websocket.Conn) error
+	errorHandler func(error)
+	sessions     Sessions
+	mutex        sync.RWMutex
+	onConnect    *int8
 }
 
 var upgrader = websocket.Upgrader{
@@ -36,13 +37,13 @@ func (w *WSHub) Open(rw http.ResponseWriter, r *http.Request) error {
 
 	if w.onConnect != nil {
 		if err := w.actions[*w.onConnect](conn); err != nil {
-			return err
+			w.errorHandler(err)
 		}
 	}
 
 	for signal := range signalChan {
 		if err := w.actions[signal.state](conn); err != nil {
-			return err
+			w.errorHandler(err)
 		}
 	}
 	return nil
