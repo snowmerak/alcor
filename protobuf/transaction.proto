@@ -4,28 +4,16 @@ package transaction;
 
 option go_package = "./transaction";
 
-message GetRequest {
-    bytes Hash = 1;
-}
-
-message EnrollRequest {
-    bytes Message = 1;
-    bytes From = 2;
-}
-
-message EnrollResponse {
-    bytes Hash = 1;
-    bytes Message = 2;
-    bytes Timestamp = 3;
-    bytes From = 4;
-    repeated bytes Befores = 5;
-}
-
 message Transaction {
-    bytes Hash = 1;
-    bytes Message = 2;
-    bytes Timestamp = 3;
-    bytes From = 4;
-    bytes Befores = 5;
+    bytes Key = 1;
+    bytes Hash = 2;
+    bytes Message = 3;
+    bytes Timestamp = 4;
+    bytes From = 5;
     bytes Signature = 6;
+}
+
+message Pair {
+    bytes Hash = 1;
+    repeated bytes Insides = 2;
 }
