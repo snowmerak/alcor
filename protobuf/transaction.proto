@@ -24,3 +24,8 @@ message Pair {
     bytes Timestamp = 3;
     repeated bytes Insides = 4;
 }
+
+message Result {
+    bool Ok = 1;
+    bytes Error = 2;
+}
