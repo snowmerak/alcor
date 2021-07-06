@@ -3,6 +3,7 @@ module alcor
 go 1.16
 
 require (
+	fyne.io/fyne/v2 v2.0.3 // indirect
 	github.com/andybalholm/brotli v1.0.3
 	github.com/golang/snappy v0.0.3
 	github.com/gorilla/websocket v1.4.2
