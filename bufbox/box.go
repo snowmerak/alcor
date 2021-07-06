@@ -58,6 +58,13 @@ func (b *BufBox) Put(name []byte, content []byte) error {
 	return os.WriteFile(b.nameToPath(name), content, 0o770)
 }
 
+func (b *BufBox) Delete(name []byte) error {
+	if !b.Exist(name) {
+		return errors.New("BufBox: not exist name")
+	}
+	return os.Remove(b.nameToPath(name))
+}
+
 func (b *BufBox) List() ([][]byte, error) {
 	list, err := os.ReadDir(b.directory)
 	if err != nil {
