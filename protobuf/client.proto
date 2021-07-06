@@ -10,5 +10,11 @@ message GetRequest {
 
 message Client {
     bytes ID = 1;
-    bytes PubKey = 2;
+    bytes PublicKey = 2;
+}
+
+message Account {
+    bytes ID = 1;
+    bytes PrivateKey = 2;
+    bytes PublicKey = 3;
 }
