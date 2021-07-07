@@ -1,24 +1,62 @@
 package main
 
 import (
+	"embed"
+	"errors"
+	"fmt"
+	"io/fs"
 	"log"
+	"net"
 	"net/http"
+	"strings"
 
-	"gopkg.in/olahol/melody.v1"
+	"github.com/webview/webview"
 )
 
+//go:embed ui/public
+var web embed.FS
+
 func main() {
-	m := melody.New()
-
-	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-		m.HandleRequest(rw, r)
-	})
-
-	m.HandleMessage(func(s *melody.Session, b []byte) {
-		m.Broadcast(b)
-	})
-
-	if err := http.ListenAndServe(":9999", nil); err != nil {
+	port, err := GetFreePort()
+	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(port)
+
+	go func() {
+		public, err := fs.Sub(web, "ui/public")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.FS(public))))
+
+		http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+
+		})
+
+		if err := http.ListenAndServe(":"+port, nil); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	const debug = true
+	w := webview.New(debug)
+	defer w.Destroy()
+	w.SetSize(600, 800, webview.HintFixed)
+	w.Navigate("http://127.0.0.1:" + port + "/public/")
+	w.Run()
+}
+
+func GetFreePort() (string, error) {
+	conn, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		return "", err
+	}
+	defer conn.Close()
+	sp := strings.Split(conn.Addr().String(), ":")
+	if len(sp) < 2 {
+		return "", errors.New("not exist port")
+	}
+	return sp[1], nil
 }
