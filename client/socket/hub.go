@@ -13,11 +13,12 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func Enroll(rw http.ResponseWriter, r *http.Request) error {
+func EnrollServer(rw http.ResponseWriter, r *http.Request) error {
 	conn, err := ws.Upgrader.Upgrade(rw, r, nil)
 	if err != nil {
 		return err
 	}
+	defer conn.Close()
 
 	privateKey := sidh.NewPrivateKey(sidh.Fp503, sidh.KeyVariantSidhA)
 	if err := privateKey.Generate(rand.Reader); err != nil {
@@ -51,6 +52,7 @@ func Enroll(rw http.ResponseWriter, r *http.Request) error {
 		if err := proto.Unmarshal(message, pubKey); err != nil {
 			return err
 		}
+		publicKey = sidh.NewPublicKey(sidh.Fp503, sidh.KeyVariantSidhB)
 		if err := publicKey.Import(pubKey.Key); err != nil {
 			return err
 		}
