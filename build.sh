@@ -1,0 +1,1 @@
+cd ui && npm run build && cd .. && go build
