@@ -4,7 +4,7 @@ import (
 	"alcor/auth"
 	"alcor/client"
 	"alcor/transaction"
-	"errors"
+	"alcor/ws"
 
 	"github.com/gorilla/websocket"
 	"google.golang.org/protobuf/proto"
@@ -25,7 +25,7 @@ func Connect(url string, account *client.Account, message string) (*transaction.
 			return nil, err
 		}
 		if typ != websocket.BinaryMessage {
-			return nil, errors.New("data is not binary message")
+			return nil, ws.NotBinaryMessage()
 		}
 		/*
 			0: receive Key date and make Transaction then
