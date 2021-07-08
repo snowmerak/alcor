@@ -6,6 +6,7 @@ import (
 	"alcor/transaction"
 	"alcor/transaction/ground"
 	"alcor/transaction/timestamp"
+	"alcor/ws"
 	"bytes"
 	"errors"
 	"math/rand"
@@ -15,12 +16,8 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true },
-}
-
 func Handle(rw http.ResponseWriter, r *http.Request) error {
-	conn, err := upgrader.Upgrade(rw, r, nil)
+	conn, err := ws.Upgrader.Upgrade(rw, r, nil)
 	if err != nil {
 		return err
 	}
@@ -42,7 +39,7 @@ func Handle(rw http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	if typ != websocket.BinaryMessage {
-		return errors.New("data is not binary message")
+		return ws.NotBinaryMessage()
 	}
 
 	t := new(transaction.Transaction)
