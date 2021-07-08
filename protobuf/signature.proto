@@ -8,3 +8,8 @@ message Signature {
     string R = 1;
     string S = 2;
 }
+
+message Result {
+    bool Ok = 1;
+    bytes Error = 2;
+}

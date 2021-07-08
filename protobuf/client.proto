@@ -4,6 +4,10 @@ package client;
 
 option go_package = "./client";
 
+message PublicKey {
+    bytes key = 1;
+}
+
 message GetRequest {
     bytes ID = 1;
 }
@@ -17,4 +21,9 @@ message Account {
     bytes ID = 1;
     bytes PrivateKey = 2;
     bytes PublicKey = 3;
+}
+
+message Result {
+    bool Ok = 1;
+    bytes Error = 2;
 }
