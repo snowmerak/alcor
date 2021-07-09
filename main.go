@@ -3,12 +3,14 @@ package main
 import (
 	"embed"
 	"errors"
-	"fmt"
+	"flag"
 	"io/fs"
 	"log"
 	"net"
 	"net/http"
 	"strings"
+
+	clientSocket "alcor/client/socket"
 
 	"github.com/webview/webview"
 )
@@ -17,35 +19,50 @@ import (
 var web embed.FS
 
 func main() {
-	port, err := GetFreePort()
-	if err != nil {
-		log.Fatal(err)
+	isMaster := flag.Bool("master", false, "")
+	clientEnrollTest := flag.Bool("client_enroll", false, "")
+	flag.Parse()
+
+	// port, err := GetFreePort()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println(port)
+	port := "9999"
+
+	if !(*clientEnrollTest) {
+		go func() {
+			public, err := fs.Sub(web, "ui/public")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.FS(public))))
+
+			if *isMaster {
+				http.HandleFunc("/client/enroll", func(rw http.ResponseWriter, r *http.Request) {
+					if err := clientSocket.EnrollServer(rw, r); err != nil {
+						log.Panicln(err)
+					}
+				})
+			}
+
+			if err := http.ListenAndServe(":"+port, nil); err != nil {
+				log.Fatal(err)
+			}
+		}()
+
+		const debug = true
+		w := webview.New(debug)
+		defer w.Destroy()
+		w.SetSize(1200, 860, webview.HintFixed)
+		w.Navigate("http://127.0.0.1:" + port + "/public/")
+		w.Run()
 	}
-	fmt.Println(port)
 
-	go func() {
-		public, err := fs.Sub(web, "ui/public")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.FS(public))))
-
-		http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-
-		})
-
-		if err := http.ListenAndServe(":"+port, nil); err != nil {
-			log.Fatal(err)
-		}
-	}()
-
-	const debug = true
-	w := webview.New(debug)
-	defer w.Destroy()
-	w.SetSize(600, 800, webview.HintFixed)
-	w.Navigate("http://127.0.0.1:" + port + "/public/")
-	w.Run()
+	if *clientEnrollTest {
+		log.Println(clientSocket.EnrollClient("ws://127.0.0.1:"+port+"/client/enroll", "kym985478"))
+	}
 }
 
 func GetFreePort() (string, error) {
