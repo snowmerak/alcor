@@ -6,7 +6,9 @@ import (
 	"alcor/client/wallet"
 	"alcor/ws"
 	"crypto/aes"
+	"crypto/cipher"
 	"crypto/rand"
+	"crypto/sha256"
 	"errors"
 
 	"github.com/cloudflare/circl/dh/sidh"
@@ -93,29 +95,20 @@ loop:
 				return errors.New(string(result.Error))
 			}
 
-			block, err := aes.NewCipher(secret[:32])
+			hashed := sha256.Sum256(secret)
+			block, err := aes.NewCipher(hashed[:])
 			if err != nil {
 				return err
 			}
 
 			pubkey := new(client.PublicKey)
-			temp := make([]byte, len(account.PublicKey))
-			for i := 0; i < len(account.PublicKey); i++ {
-				temp[i] = account.PublicKey[i]
+
+			aead, err := cipher.NewGCM(block)
+			if err != nil {
+				return err
 			}
-			max := 0
-			for max < len(temp) {
-				max += block.BlockSize()
-			}
-			for max > len(temp) {
-				temp = append(temp, 0)
-			}
-			encrypt := make([]byte, block.BlockSize())
-			for len(temp) > 0 {
-				block.Encrypt(encrypt, temp[:block.BlockSize()])
-				temp = temp[block.BlockSize():]
-			}
-			pubkey.Key = encrypt
+			pubkey.Key = aead.Seal(nil, secret[:aead.NonceSize()], account.PublicKey, nil)
+
 			c := new(client.Client)
 			c.ID = []byte(id)
 			c.PublicKey = pubkey.Key

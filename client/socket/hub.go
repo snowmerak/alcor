@@ -5,7 +5,9 @@ import (
 	"alcor/client/book"
 	"alcor/ws"
 	"crypto/aes"
+	"crypto/cipher"
 	"crypto/rand"
+	"crypto/sha256"
 	"crypto/sha512"
 	"net/http"
 
@@ -73,7 +75,8 @@ func EnrollServer(rw http.ResponseWriter, r *http.Request) error {
 		conn.WriteMessage(websocket.BinaryMessage, bs)
 	}
 
-	block, err := aes.NewCipher(secert[:32])
+	hashed := sha256.Sum256(secert)
+	block, err := aes.NewCipher(hashed[:])
 	if err != nil {
 		return err
 	}
@@ -90,20 +93,15 @@ func EnrollServer(rw http.ResponseWriter, r *http.Request) error {
 		if err := proto.Unmarshal(message, c); err != nil {
 			return err
 		}
-		temp := c.PublicKey
-		c.PublicKey = make([]byte, len(temp))
-		max := 0
-		for max < len(temp) {
-			max += block.BlockSize()
+
+		aead, err := cipher.NewGCM(block)
+		if err != nil {
+			return err
 		}
-		for max > len(temp) {
-			temp = append(temp, 0)
-		}
-		decrypted := make([]byte, block.BlockSize())
-		for len(temp) > 0 {
-			block.Decrypt(decrypted, temp[:block.BlockSize()])
-			c.PublicKey = append(c.PublicKey, decrypted...)
-			temp = temp[block.BlockSize():]
+
+		c.PublicKey, err = aead.Open(nil, secert[:aead.NonceSize()], c.PublicKey, nil)
+		if err != nil {
+			return err
 		}
 	}
 
