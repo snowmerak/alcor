@@ -61,6 +61,17 @@ func EnrollServer(rw http.ResponseWriter, r *http.Request) error {
 	secert := make([]byte, privateKey.SharedSecretSize())
 	privateKey.DeriveSecret(secert, publicKey)
 
+	{
+		result := new(client.Result)
+		result.Ok = true
+		result.Error = nil
+		bs, err := proto.Marshal(result)
+		if err != nil {
+			return err
+		}
+		conn.WriteMessage(websocket.BinaryMessage, bs)
+	}
+
 	block, err := aes.NewCipher(secert[:32])
 	if err != nil {
 		return err
