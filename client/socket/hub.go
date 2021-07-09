@@ -6,6 +6,7 @@ import (
 	"alcor/ws"
 	"crypto/aes"
 	"crypto/rand"
+	"crypto/sha512"
 	"net/http"
 
 	"github.com/cloudflare/circl/dh/sidh"
@@ -106,11 +107,15 @@ func EnrollServer(rw http.ResponseWriter, r *http.Request) error {
 		}
 	}
 
-	rs := new(client.Result)
-	rs.Ok = true
+	rs := new(client.HashID)
+	salt := make([]byte, 128)
+	rand.Read(salt)
+	salt = append(salt, c.ID...)
+	id := sha512.Sum512(salt)
+	rs.ID = id[:]
+	c.ID = id[:]
 	rs.Error = nil
 	if err := book.Put(c); err != nil {
-		rs.Ok = false
 		rs.Error = []byte(err.Error())
 	}
 

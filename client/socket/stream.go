@@ -3,6 +3,7 @@ package socket
 import (
 	"alcor/auth"
 	"alcor/client"
+	"alcor/client/wallet"
 	"alcor/ws"
 	"crypto/aes"
 	"crypto/rand"
@@ -13,7 +14,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func EnrollClient(url string) error {
+func EnrollClient(url string, id string) error {
 	conn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		return err
@@ -115,7 +116,10 @@ loop:
 				temp = temp[block.BlockSize():]
 			}
 			pubkey.Key = encrypt
-			bs, err := proto.Marshal(pubkey)
+			c := new(client.Client)
+			c.ID = []byte(id)
+			c.PublicKey = pubkey.Key
+			bs, err := proto.Marshal(c)
 			if err != nil {
 				return err
 			}
@@ -126,16 +130,22 @@ loop:
 
 			state = 2
 		case 2:
-			result := new(client.Result)
+			result := new(client.HashID)
 			if err := proto.Unmarshal(message, result); err != nil {
 				return err
 			}
-			if !result.Ok {
+			if result.Error != nil {
 				return errors.New(string(result.Error))
+			} else {
+				account.ID = result.ID
 			}
 
 			break loop
 		}
+	}
+
+	if err := wallet.Put(account); err != nil {
+		return err
 	}
 
 	return nil
