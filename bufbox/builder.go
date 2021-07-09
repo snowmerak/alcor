@@ -8,6 +8,12 @@ type BufBoxWrapper struct {
 	bufBox *BufBox
 }
 
+func NewWrapper() *BufBoxWrapper {
+	return &BufBoxWrapper{
+		bufBox: new(BufBox),
+	}
+}
+
 func (b *BufBoxWrapper) Unwrap() *BufBox {
 	Mkdir(b.bufBox.directory)
 	b.bufBox.cacheSet = csset.CSSet{}

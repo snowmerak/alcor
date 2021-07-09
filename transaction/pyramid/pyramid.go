@@ -13,7 +13,7 @@ var Path = filepath.Join(".", "db", "pairs")
 var store *bufbox.BufBox
 
 func init() {
-	store = new(bufbox.BufBoxWrapper).SetCompression(bufbox.BasisCompression).SetDirectory(Path).Unwrap()
+	store = bufbox.NewWrapper().SetCompression(bufbox.BasisCompression).SetDirectory(Path).Unwrap()
 }
 
 func Put(p *transaction.Pair) error {
