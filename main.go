@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"embed"
+	"encoding/json"
 	"errors"
 	"flag"
 	"io/fs"
@@ -10,7 +12,9 @@ import (
 	"net/http"
 	"strings"
 
+	"alcor/client/book"
 	clientSocket "alcor/client/socket"
+	"alcor/client/wallet"
 
 	"github.com/webview/webview"
 )
@@ -46,6 +50,24 @@ func main() {
 					}
 				})
 			}
+
+			http.HandleFunc("/wallet/get", func(rw http.ResponseWriter, r *http.Request) {
+				rw.WriteHeader(202)
+				accounts, _ := wallet.List()
+				buffer := bytes.NewBuffer(nil)
+				encoder := json.NewEncoder(buffer)
+				encoder.Encode(accounts)
+				rw.Write(buffer.Bytes())
+			})
+
+			http.HandleFunc("/client/get", func(rw http.ResponseWriter, r *http.Request) {
+				rw.WriteHeader(202)
+				clients, _ := book.List()
+				buffer := bytes.NewBuffer(nil)
+				encoder := json.NewEncoder(buffer)
+				encoder.Encode(clients)
+				rw.Write(buffer.Bytes())
+			})
 
 			if err := http.ListenAndServe(":"+port, nil); err != nil {
 				log.Fatal(err)
