@@ -67,6 +67,61 @@ func (x *PublicKey) GetKey() []byte {
 	return nil
 }
 
+type HashID struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID    []byte `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	Error []byte `protobuf:"bytes,2,opt,name=Error,proto3" json:"Error,omitempty"`
+}
+
+func (x *HashID) Reset() {
+	*x = HashID{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protobuf_client_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HashID) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HashID) ProtoMessage() {}
+
+func (x *HashID) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_client_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HashID.ProtoReflect.Descriptor instead.
+func (*HashID) Descriptor() ([]byte, []int) {
+	return file_protobuf_client_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *HashID) GetID() []byte {
+	if x != nil {
+		return x.ID
+	}
+	return nil
+}
+
+func (x *HashID) GetError() []byte {
+	if x != nil {
+		return x.Error
+	}
+	return nil
+}
+
 type GetRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -78,7 +133,7 @@ type GetRequest struct {
 func (x *GetRequest) Reset() {
 	*x = GetRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protobuf_client_proto_msgTypes[1]
+		mi := &file_protobuf_client_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -91,7 +146,7 @@ func (x *GetRequest) String() string {
 func (*GetRequest) ProtoMessage() {}
 
 func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_protobuf_client_proto_msgTypes[1]
+	mi := &file_protobuf_client_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -104,7 +159,7 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_protobuf_client_proto_rawDescGZIP(), []int{1}
+	return file_protobuf_client_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetRequest) GetID() []byte {
@@ -126,7 +181,7 @@ type Client struct {
 func (x *Client) Reset() {
 	*x = Client{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protobuf_client_proto_msgTypes[2]
+		mi := &file_protobuf_client_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -139,7 +194,7 @@ func (x *Client) String() string {
 func (*Client) ProtoMessage() {}
 
 func (x *Client) ProtoReflect() protoreflect.Message {
-	mi := &file_protobuf_client_proto_msgTypes[2]
+	mi := &file_protobuf_client_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +207,7 @@ func (x *Client) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Client.ProtoReflect.Descriptor instead.
 func (*Client) Descriptor() ([]byte, []int) {
-	return file_protobuf_client_proto_rawDescGZIP(), []int{2}
+	return file_protobuf_client_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *Client) GetID() []byte {
@@ -182,7 +237,7 @@ type Account struct {
 func (x *Account) Reset() {
 	*x = Account{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protobuf_client_proto_msgTypes[3]
+		mi := &file_protobuf_client_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -195,7 +250,7 @@ func (x *Account) String() string {
 func (*Account) ProtoMessage() {}
 
 func (x *Account) ProtoReflect() protoreflect.Message {
-	mi := &file_protobuf_client_proto_msgTypes[3]
+	mi := &file_protobuf_client_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -208,7 +263,7 @@ func (x *Account) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Account.ProtoReflect.Descriptor instead.
 func (*Account) Descriptor() ([]byte, []int) {
-	return file_protobuf_client_proto_rawDescGZIP(), []int{3}
+	return file_protobuf_client_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Account) GetID() []byte {
@@ -244,7 +299,7 @@ type Result struct {
 func (x *Result) Reset() {
 	*x = Result{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protobuf_client_proto_msgTypes[4]
+		mi := &file_protobuf_client_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -257,7 +312,7 @@ func (x *Result) String() string {
 func (*Result) ProtoMessage() {}
 
 func (x *Result) ProtoReflect() protoreflect.Message {
-	mi := &file_protobuf_client_proto_msgTypes[4]
+	mi := &file_protobuf_client_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -270,7 +325,7 @@ func (x *Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Result.ProtoReflect.Descriptor instead.
 func (*Result) Descriptor() ([]byte, []int) {
-	return file_protobuf_client_proto_rawDescGZIP(), []int{4}
+	return file_protobuf_client_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Result) GetOk() bool {
@@ -293,7 +348,10 @@ var file_protobuf_client_proto_rawDesc = []byte{
 	0x0a, 0x15, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e,
 	0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x22,
 	0x1d, 0x0a, 0x09, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x12, 0x10, 0x0a, 0x03,
-	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x1c,
+	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x2e,
+	0x0a, 0x06, 0x48, 0x61, 0x73, 0x68, 0x49, 0x44, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0c, 0x52, 0x02, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x45, 0x72, 0x72, 0x6f,
+	0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x1c,
 	0x0a, 0x0a, 0x47, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02,
 	0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x02, 0x49, 0x44, 0x22, 0x36, 0x0a, 0x06,
 	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01,
@@ -324,13 +382,14 @@ func file_protobuf_client_proto_rawDescGZIP() []byte {
 	return file_protobuf_client_proto_rawDescData
 }
 
-var file_protobuf_client_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_protobuf_client_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_protobuf_client_proto_goTypes = []interface{}{
 	(*PublicKey)(nil),  // 0: client.PublicKey
-	(*GetRequest)(nil), // 1: client.GetRequest
-	(*Client)(nil),     // 2: client.Client
-	(*Account)(nil),    // 3: client.Account
-	(*Result)(nil),     // 4: client.Result
+	(*HashID)(nil),     // 1: client.HashID
+	(*GetRequest)(nil), // 2: client.GetRequest
+	(*Client)(nil),     // 3: client.Client
+	(*Account)(nil),    // 4: client.Account
+	(*Result)(nil),     // 5: client.Result
 }
 var file_protobuf_client_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -359,7 +418,7 @@ func file_protobuf_client_proto_init() {
 			}
 		}
 		file_protobuf_client_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRequest); i {
+			switch v := v.(*HashID); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -371,7 +430,7 @@ func file_protobuf_client_proto_init() {
 			}
 		}
 		file_protobuf_client_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Client); i {
+			switch v := v.(*GetRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -383,7 +442,7 @@ func file_protobuf_client_proto_init() {
 			}
 		}
 		file_protobuf_client_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Account); i {
+			switch v := v.(*Client); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -395,6 +454,18 @@ func file_protobuf_client_proto_init() {
 			}
 		}
 		file_protobuf_client_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Account); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protobuf_client_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Result); i {
 			case 0:
 				return &v.state
@@ -413,7 +484,7 @@ func file_protobuf_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protobuf_client_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
