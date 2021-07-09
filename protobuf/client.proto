@@ -8,6 +8,11 @@ message PublicKey {
     bytes key = 1;
 }
 
+message HashID {
+    bytes ID = 1;
+    bytes Error = 2;
+}
+
 message GetRequest {
     bytes ID = 1;
 }
