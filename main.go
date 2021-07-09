@@ -83,7 +83,9 @@ func main() {
 	}
 
 	if *clientEnrollTest {
-		log.Println(clientSocket.EnrollClient("ws://127.0.0.1:"+port+"/client/enroll", "kym985478"))
+		if err := clientSocket.EnrollClient("ws://127.0.0.1:"+port+"/client/enroll", "kym985478"); err != nil {
+			log.Println(err)
+		}
 	}
 }
 
