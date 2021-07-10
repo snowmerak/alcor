@@ -1,12 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"embed"
-	"encoding/json"
+	"encoding/hex"
 	"errors"
 	"flag"
-	"io"
+	"fmt"
 	"io/fs"
 	"log"
 	"net"
@@ -17,7 +16,10 @@ import (
 	clientSocket "alcor/client/socket"
 	"alcor/client/wallet"
 	"alcor/config"
+	transactionSocket "alcor/transaction/socket"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/webview/webview"
 )
 
@@ -26,6 +28,7 @@ var web embed.FS
 
 func main() {
 	isMaster := flag.Bool("master", false, "")
+	useWeb := flag.Bool("web", false, "")
 	flag.Parse()
 
 	// port, err := GetFreePort()
@@ -34,6 +37,7 @@ func main() {
 	// }
 	// fmt.Println(port)
 	port := "9999"
+	app := fiber.New()
 
 	go func() {
 		public, err := fs.Sub(web, "ui/public")
@@ -41,73 +45,80 @@ func main() {
 			log.Fatal(err)
 		}
 
-		http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.FS(public))))
+		app.Use("/public/", filesystem.New(filesystem.Config{Root: http.FS(public)}))
 
 		if *isMaster {
-			http.HandleFunc("/client/enroll", func(rw http.ResponseWriter, r *http.Request) {
-				if err := clientSocket.EnrollServer(rw, r); err != nil {
-					log.Panicln(err)
+			app.Get("/client/enroll", func(c *fiber.Ctx) error {
+				if err := clientSocket.EnrollServer(c.Context()); err != nil {
+					return err
 				}
+				return nil
+			})
+
+			app.Get("/transaction/enroll", func(c *fiber.Ctx) error {
+				if err := transactionSocket.EnrollServer(c.Context()); err != nil {
+					return err
+				}
+				return nil
 			})
 		}
 
-		http.HandleFunc("/wallet", func(rw http.ResponseWriter, r *http.Request) {
-			switch strings.ToUpper(r.Method) {
-			case "GET":
-				rw.WriteHeader(202)
-				accounts, _ := wallet.List()
-				buffer := bytes.NewBuffer(nil)
-				encoder := json.NewEncoder(buffer)
-				encoder.Encode(accounts)
-				rw.Write(buffer.Bytes())
-			case "PUT":
-				rw.WriteHeader(202)
-				bs, err := io.ReadAll(r.Body)
-				if err != nil {
-					rw.Write(bs)
-					return
-				}
-				clientSocket.EnrollClient("ws://"+config.HigherAddress+":"+port+"/client/enroll", string(bs))
+		app.Get("/wallet", func(c *fiber.Ctx) error {
+			accounts, _ := wallet.List()
+			return c.JSON(accounts)
+		})
+		app.Get("/wallet/:id", func(c *fiber.Ctx) error {
+			id := c.Params("id", "")
+			hash, err := hex.DecodeString(id)
+			if err != nil {
+				return c.JSON(errors.New("invalid id"))
 			}
+			account, err := wallet.Get(hash)
+			if err != nil {
+				return c.JSON(err)
+			}
+			return c.JSON(account)
+		})
+		app.Put("/wallet", func(c *fiber.Ctx) error {
+			if err := clientSocket.EnrollClient("ws://"+config.HigherAddress+":"+port+"/client/enroll", string(c.Body())); err != nil {
+				return c.SendString(err.Error())
+			}
+			return c.SendString("Succeed")
 		})
 
-		http.HandleFunc("/client", func(rw http.ResponseWriter, r *http.Request) {
-			switch strings.ToUpper(r.Method) {
-			case "GET":
-				rw.WriteHeader(202)
-				clients, _ := book.List()
-				buffer := bytes.NewBuffer(nil)
-				encoder := json.NewEncoder(buffer)
-				encoder.Encode(clients)
-				rw.Write(buffer.Bytes())
-			}
+		app.Get("/client", func(c *fiber.Ctx) error {
+			clients, _ := book.List()
+			return c.JSON(clients)
 		})
 
-		http.HandleFunc("/config/higheraddress", func(rw http.ResponseWriter, r *http.Request) {
-			switch strings.ToUpper(r.Method) {
-			case "GET":
-				rw.WriteHeader(202)
-				rw.Write([]byte(config.HigherAddress))
-			case "PUT":
-				rw.WriteHeader(202)
-			case "DELETE":
-				rw.WriteHeader(202)
-			case "PATCH":
-				rw.WriteHeader(202)
+		app.Get("/config/higheraddress", func(c *fiber.Ctx) error {
+			return c.SendString(config.HigherAddress)
+		})
+		app.Put("/config/higheraddress", func(c *fiber.Ctx) error {
+			body := c.Body()
+			if len(body) == 0 {
+				return c.SendString("Failed")
 			}
+			config.HigherAddress = string(body)
+			fmt.Println(config.HigherAddress)
+			return c.SendString("Succeed")
+		})
+		app.Delete("config/higheraddress", func(c *fiber.Ctx) error {
+			config.HigherAddress = "127.0.0.1"
+			return c.SendString("Succeed")
 		})
 
-		if err := http.ListenAndServe(":"+port, nil); err != nil {
-			log.Fatal(err)
-		}
+		log.Fatal(app.Listen("0.0.0.0:" + port))
 	}()
 
-	const debug = true
-	w := webview.New(debug)
-	defer w.Destroy()
-	w.SetSize(800, 640, webview.HintNone)
-	w.Navigate("http://127.0.0.1:" + port + "/public/")
-	w.Run()
+	if *useWeb {
+		const debug = true
+		w := webview.New(debug)
+		defer w.Destroy()
+		w.SetSize(800, 640, webview.HintNone)
+		w.Navigate("http://127.0.0.1:" + port + "/public/")
+		w.Run()
+	}
 }
 
 func GetFreePort() (string, error) {
