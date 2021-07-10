@@ -1,11 +1,12 @@
 package ws
 
 import (
-	"net/http"
-
-	"github.com/gorilla/websocket"
+	"github.com/fasthttp/websocket"
+	"github.com/valyala/fasthttp"
 )
 
-var Upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true },
+var Upgrader = websocket.FastHTTPUpgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin:     func(ctx *fasthttp.RequestCtx) bool { return true },
 }
