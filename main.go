@@ -129,7 +129,7 @@ func main() {
 		const debug = true
 		w := webview.New(debug)
 		defer w.Destroy()
-		w.SetSize(800, 640, webview.HintNone)
+		w.SetSize(1200, 860, webview.HintNone)
 		w.Navigate("http://127.0.0.1:" + port + "/public/")
 		w.Run()
 	}
