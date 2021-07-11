@@ -94,10 +94,19 @@ func main() {
 			})
 		})
 		app.Put("/wallet", func(c *fiber.Ctx) error {
-			if err := clientSocket.EnrollClient("ws://"+config.HigherAddress+":"+port+"/client/enroll", string(c.Body())); err != nil {
-				return c.SendString(err.Error())
+			id, err := clientSocket.EnrollClient("ws://"+config.HigherAddress+":"+port+"/client/enroll", string(c.Body()))
+			if err != nil {
+				return c.JSON(struct {
+					Error string
+				}{
+					err.Error(),
+				})
 			}
-			return c.SendString("Succeed")
+			return c.JSON(struct {
+				ID string
+			}{
+				hex.EncodeToString(id),
+			})
 		})
 
 		app.Get("/client", func(c *fiber.Ctx) error {
