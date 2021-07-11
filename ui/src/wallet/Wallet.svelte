@@ -3,6 +3,17 @@ import axios from 'axios';
 
 let input = "";
 let selectedWallet;
+
+async function PutWallet(input) {
+    let data = await axios.put("/wallet", input).then(response => {
+        return response.data;
+    });
+    if (data.Error != undefined) {
+        alert(data.Error);
+        return;
+    }
+    selectedWallet = data.ID;
+}
 </script>
 
 {#if selectedWallet == undefined}
@@ -10,7 +21,7 @@ let selectedWallet;
     <div class="grouped">
         <input type="text" bind:value={input} placeholder="Enter New ID" />
         <!-- svelte-ignore a11y-missing-attribute -->
-        <button class="button primary">Create</button>
+        <button class="button primary" on:click={async () => { await PutWallet(input); }}>Create</button>
     </div>
     <!-- svelte-ignore empty-block -->
     {#await axios.get('/wallet').then(res => res.data)}
