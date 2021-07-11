@@ -10,7 +10,10 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os/exec"
+	"runtime"
 	"strings"
+	"sync"
 
 	"alcor/client/book"
 	clientSocket "alcor/client/socket"
@@ -38,7 +41,9 @@ func main() {
 	// fmt.Println(port)
 	port := "9999"
 	app := fiber.New()
+	wg := sync.WaitGroup{}
 
+	wg.Add(1)
 	go func() {
 		public, err := fs.Sub(web, "ui/public")
 		if err != nil {
@@ -132,15 +137,25 @@ func main() {
 		})
 
 		log.Fatal(app.Listen("0.0.0.0:" + port))
+		wg.Done()
 	}()
 
 	if *useWeb {
+		if runtime.GOOS == "windows" {
+			err := exec.Command("open", "http://127.0.0.1:"+port+"/public/").Start()
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
 		const debug = true
 		w := webview.New(debug)
 		defer w.Destroy()
 		w.SetSize(1200, 860, webview.HintNone)
 		w.Navigate("http://127.0.0.1:" + port + "/public/")
 		w.Run()
+	} else {
+		fmt.Println("listen on " + port)
+		wg.Wait()
 	}
 }
 
