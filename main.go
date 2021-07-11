@@ -65,7 +65,11 @@ func main() {
 
 		app.Get("/wallet", func(c *fiber.Ctx) error {
 			accounts, _ := wallet.List()
-			return c.JSON(accounts)
+			list := make([]string, 0, len(accounts))
+			for _, account := range accounts {
+				list = append(list, hex.EncodeToString(account))
+			}
+			return c.JSON(list)
 		})
 		app.Get("/wallet/:id", func(c *fiber.Ctx) error {
 			id := c.Params("id", "")
@@ -77,7 +81,17 @@ func main() {
 			if err != nil {
 				return c.JSON(err)
 			}
-			return c.JSON(account)
+			return c.JSON(struct {
+				ID         string
+				PrivateKey string
+				PublicKey  string
+				Used       bool
+			}{
+				ID:         hex.EncodeToString(account.ID),
+				PrivateKey: hex.EncodeToString(account.PrivateKey),
+				PublicKey:  hex.EncodeToString(account.PublicKey),
+				Used:       account.Used,
+			})
 		})
 		app.Put("/wallet", func(c *fiber.Ctx) error {
 			if err := clientSocket.EnrollClient("ws://"+config.HigherAddress+":"+port+"/client/enroll", string(c.Body())); err != nil {
