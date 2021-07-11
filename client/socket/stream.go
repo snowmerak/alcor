@@ -16,10 +16,10 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func EnrollClient(url string, id string) error {
+func EnrollClient(url string, id string) ([]byte, error) {
 	conn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer conn.Close()
 
@@ -31,22 +31,22 @@ func EnrollClient(url string, id string) error {
 
 	privateKey, err := auth.Basis.GeneratePrivateKey()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	publicKey, err := auth.Basis.GeneratePublicKey(privateKey)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	account := new(client.Account)
 	account.Used = false
 	account.PrivateKey, err = auth.Basis.SerializePrivateKey(privateKey)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	account.PublicKey, err = auth.Basis.SerializePublicKey(publicKey)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	state := 0
@@ -54,16 +54,16 @@ loop:
 	for {
 		typ, message, err := conn.ReadMessage()
 		if err != nil {
-			return err
+			return nil, err
 		}
 		if typ != websocket.BinaryMessage {
-			return ws.NotBinaryMessage()
+			return nil, ws.NotBinaryMessage()
 		}
 		switch state {
 		case 0:
 			pubkey := new(client.PublicKey)
 			if err := proto.Unmarshal(message, pubkey); err != nil {
-				return err
+				return nil, err
 			}
 
 			data := make([]byte, sidhPubKey.Size())
@@ -71,17 +71,17 @@ loop:
 
 			sidhPubKey = sidh.NewPublicKey(sidh.Fp503, sidh.KeyVariantSidhA)
 			if err := sidhPubKey.Import(pubkey.Key); err != nil {
-				return err
+				return nil, err
 			}
 
 			pubkey.Key = data
 			data, err = proto.Marshal(pubkey)
 			if err != nil {
-				return err
+				return nil, err
 			}
 
 			if err := conn.WriteMessage(websocket.BinaryMessage, data); err != nil {
-				return err
+				return nil, err
 			}
 
 			sidhPrivKey.DeriveSecret(secret, sidhPubKey)
@@ -90,23 +90,23 @@ loop:
 		case 1:
 			result := new(client.Result)
 			if err := proto.Unmarshal(message, result); err != nil {
-				return err
+				return nil, err
 			}
 			if !result.Ok {
-				return errors.New(string(result.Error))
+				return nil, errors.New(string(result.Error))
 			}
 
 			hashed := sha256.Sum256(secret)
 			block, err := aes.NewCipher(hashed[:])
 			if err != nil {
-				return err
+				return nil, err
 			}
 
 			pubkey := new(client.PublicKey)
 
 			aead, err := cipher.NewGCM(block)
 			if err != nil {
-				return err
+				return nil, err
 			}
 			pubkey.Key = aead.Seal(nil, secret[:aead.NonceSize()], account.PublicKey, nil)
 
@@ -115,21 +115,21 @@ loop:
 			c.PublicKey = pubkey.Key
 			bs, err := proto.Marshal(c)
 			if err != nil {
-				return err
+				return nil, err
 			}
 
 			if err := conn.WriteMessage(websocket.BinaryMessage, bs); err != nil {
-				return err
+				return nil, err
 			}
 
 			state = 2
 		case 2:
 			result := new(client.HashID)
 			if err := proto.Unmarshal(message, result); err != nil {
-				return err
+				return nil, err
 			}
 			if result.Error != nil {
-				return errors.New(string(result.Error))
+				return nil, errors.New(string(result.Error))
 			} else {
 				account.ID = result.ID
 			}
@@ -139,8 +139,8 @@ loop:
 	}
 
 	if err := wallet.Put(account); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return account.ID, nil
 }
