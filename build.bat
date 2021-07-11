@@ -1,1 +1,1 @@
-cd ui && npm run build && cd .. && go build -ldflags="-H windowsgui" -o alcor.exe
+cd ui && npm install && npm run build && cd .. && go build -ldflags="-H windowsgui" -o alcor.exe
