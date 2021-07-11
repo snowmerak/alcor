@@ -42,22 +42,18 @@ func Get(hash []byte) (*client.Account, error) {
 	return a, nil
 }
 
-func List() ([]*client.Account, error) {
+func List() ([][]byte, error) {
 	list, err := os.ReadDir(Path)
 	if err != nil {
 		return nil, err
 	}
-	result := make([]*client.Account, 0, len(list))
+	result := make([][]byte, 0, len(list))
 	for _, v := range list {
 		h, err := hex.DecodeString(v.Name())
 		if err != nil {
 			continue
 		}
-		a, err := Get(h)
-		if err != nil {
-			continue
-		}
-		result = append(result, a)
+		result = append(result, h)
 	}
 	return result, nil
 }

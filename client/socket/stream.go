@@ -12,7 +12,7 @@ import (
 	"errors"
 
 	"github.com/cloudflare/circl/dh/sidh"
-	"github.com/gorilla/websocket"
+	"github.com/fasthttp/websocket"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -39,6 +39,7 @@ func EnrollClient(url string, id string) error {
 	}
 
 	account := new(client.Account)
+	account.Used = false
 	account.PrivateKey, err = auth.Basis.SerializePrivateKey(privateKey)
 	if err != nil {
 		return err
