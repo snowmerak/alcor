@@ -23,9 +23,10 @@ message Client {
 }
 
 message Account {
-    bytes ID = 1;
-    bytes PrivateKey = 2;
-    bytes PublicKey = 3;
+    bool Used = 1;
+    bytes ID = 2;
+    bytes PrivateKey = 3;
+    bytes PublicKey = 4;
 }
 
 message Result {
