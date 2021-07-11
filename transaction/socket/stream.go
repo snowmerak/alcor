@@ -6,11 +6,11 @@ import (
 	"alcor/transaction"
 	"alcor/ws"
 
-	"github.com/gorilla/websocket"
+	"github.com/fasthttp/websocket"
 	"google.golang.org/protobuf/proto"
 )
 
-func Connect(url string, account *client.Account, message string) (*transaction.Result, error) {
+func EnrollConnect(url string, account *client.Account, message string) (*transaction.Result, error) {
 	conn, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		return nil, err
