@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package vote;
+
+option go_package = "service/vote/votepb";
+
+message KeyBytes {
+    bytes Data = 1;
+}
+
+message Paper {
+    bytes VoterId = 2;
+	bytes Timestamp = 3;
+	bytes Message = 4;
+	bytes RandomBytes = 5;
+	bytes Hash = 6;
+	bytes Signature = 7;
+}
+
+message Result {
+    bool Ok = 1;
+    string Error = 2;
+}

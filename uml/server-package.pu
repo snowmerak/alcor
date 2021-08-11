@@ -1,0 +1,11 @@
+@startuml server-package
+
+object main
+
+object route
+main --> route
+
+object wst
+main --> wst
+
+@enduml

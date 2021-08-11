@@ -1,0 +1,50 @@
+version: "3"
+
+services: 
+    voters:
+        image: edgedb/edgedb:latest
+        ports: 
+            - 16419:16419
+        environment: 
+            - EDGEDB_PASSWORD=test
+            - EDGEDB_USER=merak
+            - EDGEDB_PORT=16419
+        networks: 
+            - voteredge
+    
+    papers:
+        image: edgedb/edgedb:latest
+        ports: 
+            - 16420:16420
+        environment: 
+            - EDGEDB_PASSWORD=test
+            - EDGEDB_USER=merak
+            - EDGEDB_PORT=16420
+        networks: 
+            - paperedge
+    
+    alcor:
+        build:
+            context: .
+            network: host
+            dockerfile: ./dockerfile
+        restart: on-failure
+        environment: 
+            - MAX_CONNECTION=20
+            - EXPIRATION_TIME=360
+        ports:
+            - 9999:9999
+            - 10000:10000
+        links: 
+            - voters
+            - papers
+        depends_on: 
+            - voters
+            - papers
+        networks:
+            - voteredge
+            - paperedge
+
+networks:
+    voteredge:
+    paperedge:

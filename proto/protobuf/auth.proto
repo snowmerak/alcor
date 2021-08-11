@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "service/auth";
+
+message PrivateKey {
+    string X = 1;
+    string Y = 2;
+}
+
+message PublicKey {
+    string X = 1;
+    string Y = 2;
+}
+
+message Signature {
+    string R = 1;
+    string S = 2;
+}

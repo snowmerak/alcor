@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package candidate;
+
+option go_package = "service/candidate";
+
+message Candidate {
+    string Name = 1;
+    string Markdown = 2;
+    string Error = 3;
+}
+
+message CandidateList {
+    string Error = 1;
+    repeated string Names = 2;
+}

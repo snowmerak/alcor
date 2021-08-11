@@ -1,0 +1,5 @@
+FROM alpine:latest
+
+COPY ./bin/alcor-linux-amd64 ./
+
+ENTRYPOINT ["./alcor-linux-amd64"]
