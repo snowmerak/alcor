@@ -14,8 +14,8 @@ var GlobalCtx context.Context = context.Background()
 
 func Init() {
 	opt := edgedb.Options{
-		MinConns: 3,
-		MaxConns: 10,
+		MinConns: 10,
+		MaxConns: 30,
 	}
 	voters, err := edgedb.ConnectDSN(GlobalCtx, "edgedb://merak:test@voters:16419", opt)
 	if err != nil {
