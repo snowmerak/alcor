@@ -52,6 +52,13 @@ func main() {
 	go registerLogger.Start(10000)
 	defer registerLogger.Close()
 
+	voteLogger, err := jumper.New("vote_error", vote.NewVoteError(""))
+	if err != nil {
+		log.Fatal(err)
+	}
+	go voteLogger.Start(10000)
+	defer voteLogger.Close()
+
 	app := fiber.New()
 
 	//admin server
@@ -70,7 +77,9 @@ func main() {
 		admin.Get("/stop", func(c *fiber.Ctx) error {
 			return app.Shutdown()
 		})
-		admin.Get("/count")
+		admin.Get("/count", func(c *fiber.Ctx) error {
+			return c.SendString("")
+		})
 		if err := admin.Listen(":10000"); err != nil {
 			log.Fatal(err)
 		}
