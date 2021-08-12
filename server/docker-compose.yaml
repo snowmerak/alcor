@@ -2,9 +2,9 @@ version: "3"
 
 services: 
     voters:
-        image: edgedb/edgedb:latest
-        ports: 
-            - 16419:16419
+        image: edgedb/edgedb:1-beta2
+        # ports: 
+        #     - 16419:16419
         environment: 
             - EDGEDB_PASSWORD=test
             - EDGEDB_USER=merak
@@ -13,9 +13,9 @@ services:
             - voteredge
     
     papers:
-        image: edgedb/edgedb:latest
-        ports: 
-            - 16420:16420
+        image: edgedb/edgedb:1-beta2
+        # ports: 
+        #     - 16420:16420
         environment: 
             - EDGEDB_PASSWORD=test
             - EDGEDB_USER=merak
@@ -30,8 +30,8 @@ services:
             dockerfile: ./dockerfile
         restart: on-failure
         environment: 
-            - MAX_CONNECTION=20
-            - EXPIRATION_TIME=360
+            - MAX_CONNECTION=100000
+            - EXPIRATION_TIME=120
         ports:
             - 9999:9999
             - 10000:10000
