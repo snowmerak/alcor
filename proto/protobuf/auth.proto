@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "service/auth";
+option go_package = "model/auth";
 
 message PrivateKey {
     string X = 1;

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package vote;
 
-option go_package = "service/vote/votepb";
+option go_package = "model/vote";
 
 message KeyBytes {
     bytes Data = 1;

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package candidate;
 
-option go_package = "service/candidate";
+option go_package = "model/candidate";
 
 message Candidate {
     string Name = 1;
@@ -10,7 +10,7 @@ message Candidate {
     string Error = 3;
 }
 
-message CandidateList {
+message List {
     string Error = 1;
     repeated string Names = 2;
 }

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package register;
 
-option go_package = "service/register/registerpb";
+option go_package = "model/register";
 
 message Request {
     bytes VoterID = 1;

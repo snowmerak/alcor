@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package stats;
 
-option go_package = "service/stats/statspb";
+option go_package = "model/stats";
 
 message Data {
 	string Candidate = 1;

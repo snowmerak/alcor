@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package cert;
+
+option go_package = "model/mq";
+
+message Capsule {
+    string ID = 1;
+    bytes Data = 2;
+}

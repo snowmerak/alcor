@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package cert;
+
+option go_package = "model/security";
+
+message Reply {
+    string ID = 1;
+    bytes PublicKey = 2;
+    string Error = 3;
+}
