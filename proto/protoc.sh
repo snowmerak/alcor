@@ -1,4 +1,4 @@
 #!/bin/bash
 
-protoc --go_out=../server protobuf/*.proto
-protoc --dart_out=../client/lib protobuf/*.proto
+protoc --go_out=./ proto/protobuf/*.proto
+protoc --dart_out=./client/lib proto/protobuf/*.proto
