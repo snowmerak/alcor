@@ -1,0 +1,62 @@
+version: "3"
+
+services: 
+    voters:
+        image: edgedb/edgedb:1-beta2
+        # ports: 
+        #     - 16419:16419
+        restart: on-failure
+        environment: 
+            - EDGEDB_PASSWORD=test
+            - EDGEDB_USER=merak
+            - EDGEDB_PORT=16419
+        networks: 
+            - voteredge
+    
+    papers:
+        image: edgedb/edgedb:1-beta2
+        # ports: 
+        #     - 16420:16420
+        restart: on-failure
+        environment: 
+            - EDGEDB_PASSWORD=test
+            - EDGEDB_USER=merak
+            - EDGEDB_PORT=16420
+        networks: 
+            - paperedge
+
+    sessions:
+        image: memcached:latest
+        restart: on-failure
+        networks:
+            - sessions
+    
+    alcor:
+        build:
+            context: .
+            network: host
+            dockerfile: ./dockerfile
+        restart: on-failure
+        environment: 
+            - MAX_CONNECTION=100000
+            - EXPIRATION_TIME=120
+        ports:
+            - 9999:9999
+            - 10000:10000
+        links: 
+            - voters
+            - papers
+            - sessions
+        depends_on: 
+            - voters
+            - papers
+            - sessions
+        networks:
+            - voteredge
+            - paperedge
+            - sessions
+
+networks:
+    voteredge:
+    paperedge:
+    sessions:
