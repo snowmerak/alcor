@@ -18,9 +18,5 @@ message Data {
 	int32 Salary = 11;
 	bool HasDebt = 12;
 	int32 Ideology = 13;
-}
-
-message Result {
-    string Error = 1;
-    bool Ok = 2;
+	bytes VoterID = 14;
 }

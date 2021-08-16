@@ -4,6 +4,20 @@ package candidate;
 
 option go_package = "model/candidate";
 
+message Request {
+    bytes VoterID = 1;
+    bytes Signature = 2;
+    bytes KeyBytes = 3;
+    string Name = 4;
+    string Markdown = 5;
+    bytes Hash = 6;
+}
+
+message Result {
+    bool OK = 1;
+    string Error = 2;
+}
+
 message Candidate {
     string Name = 1;
     string Markdown = 2;

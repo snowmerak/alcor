@@ -4,16 +4,32 @@ package register;
 
 option go_package = "model/register";
 
-message Request {
-    bytes VoterID = 1;
-    bytes Signature = 2;
-    bytes KeyBytes = 3;
-    string Name = 4;
-    string Markdown = 5;
-    bytes Hash = 6;
+message Phone {
+    string Number = 2;
+    string Name = 3;
+    string RRN = 4;
+    bool Gender = 1;
+}
+
+message Cache {
+    string Number = 2;
+    string Name = 3;
+    string RRN = 4;
+    bool Gender = 1;
+    bytes Code = 5;
+}
+
+message CertCode {
+    bytes Code = 1;
+    bytes PublicKey = 2;
 }
 
 message Result {
-    bool OK = 1;
+    bytes ID = 1;
     string Error = 2;
+}
+
+message Account {
+    bytes HashID = 1;
+    bytes PrivateKey = 2;
 }
