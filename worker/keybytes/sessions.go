@@ -1,4 +1,4 @@
-package sessions
+package keybytes
 
 import (
 	"log"
@@ -9,7 +9,7 @@ import (
 var store *memcache.Client
 
 func init() {
-	store = memcache.New("sessions:11211")
+	store = memcache.New("keybytes:11211")
 	if store == nil {
 		log.Fatal("cannot connect sessions")
 	}

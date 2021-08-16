@@ -1,7 +1,7 @@
 import 'package:channel/channel.dart';
 import 'package:get/get.dart';
 
-class SigninController extends GetxController {
+class RegisterController extends GetxController {
   String name = "";
   String phoneNumber = "";
   String birth = "";
