@@ -1,7 +1,13 @@
 package main
 
 import (
+	"alcor/db"
+	"alcor/service/candidate"
+	"alcor/service/register"
 	"alcor/service/security"
+	"alcor/service/stats"
+	"alcor/service/vote"
+	"context"
 	"os"
 	"strconv"
 	"time"
@@ -12,6 +18,14 @@ import (
 )
 
 func main() {
+	db.Init()
+
+	// test code
+	db.InsertCandidate(context.Background(), &db.Candidate{
+		Name:     "김슬기",
+		Markdown: "## 나",
+	})
+
 	app := fiber.New()
 
 	max, err := strconv.Atoi(os.Getenv("MAX_CONNECTION"))
@@ -35,6 +49,17 @@ func main() {
 	}))
 
 	app.Post("/handshake", security.Service)
+
+	app.Post("/voter/register/request", register.PhoneService)
+	app.Post("/voter/register/cert", register.CertService)
+
+	app.Get("/candidate", candidate.GetService)
+	app.Get("/candidate/:name", candidate.GetAService)
+
+	app.Post("/vote/request", vote.RequestService)
+	app.Post("/vote/submit", vote.SubmitService)
+
+	app.Post("/stats/reply", stats.StatsService)
 
 	app.Listen(":9999")
 }
