@@ -13,13 +13,14 @@ type Candidate struct {
 }
 
 type Voter struct {
-	ID          edgedb.UUID `edgedb:"id"`
-	HashID      []byte      `edgedb:"hash_id"`
-	PublicKey   []byte      `edgedb:"public_key"`
-	RandomBytes []byte      `edgedb:"random_bytes"`
-	Timestamp   []byte      `edgedb:"timestamp"`
-	Voted       bool        `edgedb:"voted"`
-	IsCandidate bool        `edgedb:"is_candidate"`
+	ID            edgedb.UUID `edgedb:"id"`
+	HashID        []byte      `edgedb:"hash_id"`
+	PublicKey     []byte      `edgedb:"public_key"`
+	RandomBytes   []byte      `edgedb:"random_bytes"`
+	Timestamp     []byte      `edgedb:"timestamp"`
+	Voted         bool        `edgedb:"voted"`
+	IsCandidate   bool        `edgedb:"is_candidate"`
+	RepliedSurvey bool        `edgedb:"replied_survey"`
 }
 
 type Enrolled struct {

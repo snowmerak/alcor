@@ -56,6 +56,7 @@ func Init() {
 			create property timestamp -> bytes;
 			create required property voted -> bool;
 			create required property is_candidate -> bool;
+			create required property replied_survey -> bool;
 
 			create index on (.hash_id);
 		}

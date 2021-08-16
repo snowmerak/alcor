@@ -45,6 +45,7 @@ func SelectVoter(ctx context.Context, voter *Voter) error {
 		timestamp,
 		voted,
 		is_candidate,
+		replied_survey,
 	}
 	filter Voter.hash_id = <bytes>$0
 	limit 1
@@ -60,6 +61,7 @@ func InsertVoter(ctx context.Context, voter *Voter) error {
 		public_key := <bytes>$1,
 		voted := <bool>$2,
 		is_candidate := false,
+		replied_survey := false,
 	}
 	`
 	return Voters.QueryOne(ctx, cmd, id, voter.HashID, voter.PublicKey, voter.Voted)
@@ -77,6 +79,18 @@ func UpdateVoter(ctx context.Context, voter *Voter) error {
 	}
 	`
 	return Voters.Query(ctx, cmd, id, voter.HashID, voter.RandomBytes, voter.Timestamp, voter.Voted)
+}
+
+func UpdateVoterRepliedSurvey(ctx context.Context, voter *Voter) error {
+	id := new([]ID)
+	cmd := `
+	update Voter
+	filter .hash_id = <bytes>$0
+	set {
+		replied_survey := true,
+	}
+	`
+	return Voters.Query(ctx, cmd, id, voter.HashID)
 }
 
 func ChangeVoter2Candidate(ctx context.Context, voter *Voter) error {
@@ -160,4 +174,24 @@ func InsertBundle(ctx context.Context, bundle *Bundle) error {
 	}
 	`
 	return Papers.QueryOne(ctx, cmd, id, bundle.Hash, bundle.Prev, bundle.SubHashes)
+}
+
+func InsertData(ctx context.Context, data *Data) error {
+	id := new(ID)
+	cmd := `
+	candidate = $0
+	gender = $1
+	age = $2
+	region = $3
+	job = $4
+	education = $5
+	married = $6
+	divorced = $7
+	has_car = $8
+	house_type = $9
+	salary = $10
+	has_debt = $11
+	ideology = $12
+	`
+	return Papers.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology)
 }
