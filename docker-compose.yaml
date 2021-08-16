@@ -30,6 +30,18 @@ services:
         restart: on-failure
         networks:
             - sessions
+
+    certcodes:
+        image: memcached:latest
+        restart: on-failure
+        networks:
+            - certcodes
+
+    keybytes:
+        image: memcached:latest
+        restart: on-failure
+        networks:
+            - keybytes
     
     alcor:
         build:
@@ -47,16 +59,24 @@ services:
             - voters
             - papers
             - sessions
+            - keybytes
+            - certcodes
         depends_on: 
             - voters
             - papers
             - sessions
+            - keybytes
+            - certcodes
         networks:
             - voteredge
             - paperedge
             - sessions
+            - keybytes
+            - certcodes
 
 networks:
     voteredge:
     paperedge:
     sessions:
+    certcodes:
+    keybytes:
