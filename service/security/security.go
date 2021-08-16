@@ -1,6 +1,7 @@
 package security
 
 import (
+	"alcor/model/capsule"
 	"alcor/model/security"
 	"alcor/worker/sessions"
 	"crypto/aes"
@@ -35,6 +36,50 @@ func Secret2Aead(secret []byte) (cipher.AEAD, error) {
 		return nil, err
 	}
 	return cipher.NewGCM(block)
+}
+
+func Encrypt(id string, data []byte) ([]byte, error) {
+	secret, err := sessions.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	aead, err := Secret2Aead(secret)
+	if err != nil {
+		return nil, err
+	}
+	return aead.Seal(nil, secret[:aead.NonceSize()], data, nil), nil
+}
+
+func Decrypt(id string, data []byte) ([]byte, error) {
+	secret, err := sessions.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	aead, err := Secret2Aead(secret)
+	if err != nil {
+		return nil, err
+	}
+	return aead.Open(nil, secret[:aead.NonceSize()], data, nil)
+}
+
+func Encapsulate(id string, data []byte) ([]byte, error) {
+	content, err := Encrypt(id, data)
+	if err != nil {
+		return nil, err
+	}
+	capsule := new(capsule.Capsule)
+	capsule.ID = id
+	capsule.Data = content
+	return proto.Marshal(capsule)
+}
+
+func Decapsulate(data []byte) (string, []byte, error) {
+	capsule := new(capsule.Capsule)
+	if err := proto.Unmarshal(data, capsule); err != nil {
+		return "", nil, err
+	}
+	data, err := Decrypt(capsule.ID, capsule.Data)
+	return capsule.ID, data, err
 }
 
 func Service(c *fiber.Ctx) error {
