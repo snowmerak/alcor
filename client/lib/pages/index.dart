@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:alcor/controllers/config.dart';
-import 'package:alcor/pages/candidate.dart';
-import 'package:alcor/pages/signin.dart';
+import 'package:alcor/pages/register.dart';
+import 'package:alcor/service/handshake.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+
+import 'candidate.dart';
 
 final String indexRoute = '/';
 
@@ -35,15 +37,17 @@ class Index extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  await handshake();
                   await Hive.openBox<Uint8List>(configController.domain);
                   var id = Hive.box<Uint8List>(configController.domain).get('id');
                   if (id == null) {
-                    Get.toNamed(signinRoute);
+                    Get.toNamed(registerRoute);
                   } else {
-                    Get.toNamed(candidateListRoute);
+                    Get.toNamed(candidateRoute);
                   }
+                  Get.toNamed(registerRoute);
                 },
-                child: Text('저장'),
+                child: Text('연결'),
               ),
             ],
           ),

@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: protobuf/stats.proto
+//  source: proto/protobuf/stats.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -24,6 +24,7 @@ class Data extends $pb.GeneratedMessage {
     ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Salary', $pb.PbFieldType.O3, protoName: 'Salary')
     ..aOB(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'HasDebt', protoName: 'HasDebt')
     ..a<$core.int>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Ideology', $pb.PbFieldType.O3, protoName: 'Ideology')
+    ..a<$core.List<$core.int>>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'VoterID', $pb.PbFieldType.OY, protoName: 'VoterID')
     ..hasRequiredFields = false
   ;
 
@@ -42,6 +43,7 @@ class Data extends $pb.GeneratedMessage {
     $core.int? salary,
     $core.bool? hasDebt,
     $core.int? ideology,
+    $core.List<$core.int>? voterID,
   }) {
     final _result = create();
     if (candidate != null) {
@@ -82,6 +84,9 @@ class Data extends $pb.GeneratedMessage {
     }
     if (ideology != null) {
       _result.ideology = ideology;
+    }
+    if (voterID != null) {
+      _result.voterID = voterID;
     }
     return _result;
   }
@@ -222,66 +227,14 @@ class Data extends $pb.GeneratedMessage {
   $core.bool hasIdeology() => $_has(12);
   @$pb.TagNumber(13)
   void clearIdeology() => clearField(13);
-}
 
-class Result extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Result', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'stats'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Error', protoName: 'Error')
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Ok', protoName: 'Ok')
-    ..hasRequiredFields = false
-  ;
-
-  Result._() : super();
-  factory Result({
-    $core.String? error,
-    $core.bool? ok,
-  }) {
-    final _result = create();
-    if (error != null) {
-      _result.error = error;
-    }
-    if (ok != null) {
-      _result.ok = ok;
-    }
-    return _result;
-  }
-  factory Result.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Result.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  Result clone() => Result()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  Result copyWith(void Function(Result) updates) => super.copyWith((message) => updates(message as Result)) as Result; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static Result create() => Result._();
-  Result createEmptyInstance() => create();
-  static $pb.PbList<Result> createRepeated() => $pb.PbList<Result>();
-  @$core.pragma('dart2js:noInline')
-  static Result getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Result>(create);
-  static Result? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get error => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set error($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasError() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearError() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.bool get ok => $_getBF(1);
-  @$pb.TagNumber(2)
-  set ok($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasOk() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearOk() => clearField(2);
+  @$pb.TagNumber(14)
+  $core.List<$core.int> get voterID => $_getN(13);
+  @$pb.TagNumber(14)
+  set voterID($core.List<$core.int> v) { $_setBytes(13, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasVoterID() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearVoterID() => clearField(14);
 }
 

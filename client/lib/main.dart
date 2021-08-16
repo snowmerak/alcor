@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:alcor/pages/candidate.dart';
+import 'package:alcor/pages/candidateDetail.dart';
 import 'package:alcor/pages/index.dart';
-import 'package:alcor/pages/signin.dart';
+import 'package:alcor/pages/receipt.dart';
+import 'package:alcor/pages/register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -25,8 +27,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         GetPage(name: indexRoute, page: () => Index()),
-        GetPage(name: signinRoute, page: () => SignIn()),
-        GetPage(name: candidateListRoute, page: () => Candidates()),
+        GetPage(name: registerRoute, page: () => RegisterPage()),
+        GetPage(name: candidateRoute, page: () => CandidatePage()),
+        GetPage(name: candidateDetailRoute, page: () => CandidateDetailPage()),
+        GetPage(name: receiptRoute, page: () => ReceiptPage()),
       ],
     );
   }
