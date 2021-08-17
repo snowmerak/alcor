@@ -20,6 +20,10 @@ class Index extends StatelessWidget {
   Widget build(BuildContext context) {
     final configController = Get.put(ConfigController());
     return Scaffold(
+      appBar: AppBar(
+        title: Text('서버 연결'),
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
         padding: EdgeInsets.all(24),
         child: Center(
