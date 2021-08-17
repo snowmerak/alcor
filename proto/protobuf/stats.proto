@@ -8,15 +8,15 @@ message Data {
 	string Candidate = 1;
 	bool Gender = 2;
 	int32 Age = 3;
-	int32 Region = 4;
-	int32 Job = 5;
-	int32 Education = 6;
+	string Region = 4;
+	string Job = 5;
+	string Education = 6;
 	bool Married = 7;
 	bool Divorced = 8;
 	bool HasCar = 9;
-	int32 HouseType = 10;
+	string HouseType = 10;
 	int32 Salary = 11;
 	bool HasDebt = 12;
-	int32 Ideology = 13;
+	string Ideology = 13;
 	bytes VoterID = 14;
 }

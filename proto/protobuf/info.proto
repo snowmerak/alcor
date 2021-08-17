@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "model/info";
+
+message Voter {
+	bytes HashID = 1;
+	bytes PublicKey = 2;
+	bytes RandomBytes = 3;
+	bytes Timestamp = 4;
+	bool Voted = 5;
+	bool IsCandidate = 6;
+	bool RepliedSurvey = 7;
+}
+
+message Paper {
+	bytes VoterID = 1;
+	bytes Timestamp = 2;
+	bytes Message = 3;
+	bytes RandomBytes = 4;
+	bytes Hash = 5;
+	bytes Signature = 6;
+}
