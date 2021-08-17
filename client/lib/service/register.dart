@@ -60,7 +60,6 @@ Future<void> registerCert(BuildContext context) async {
             body: capsule.writeToBuffer())
         .then((value) async {
       var result = Result.fromBuffer(await decapsulate(value.bodyBytes));
-      print(result.error);
       if (value.statusCode == 200) {
         await Hive.box<Uint8List>(configController.domain)
             .put('id', Uint8List.fromList(result.iD));
