@@ -3,10 +3,12 @@ package main
 import (
 	"alcor/db"
 	"alcor/service/candidate"
-	"alcor/service/register"
+	paper_info "alcor/service/paper/info"
+	"alcor/service/paper/vote"
 	"alcor/service/security"
-	"alcor/service/stats"
-	"alcor/service/vote"
+	"alcor/service/survey"
+	voter_info "alcor/service/voter/info"
+	"alcor/service/voter/register"
 	"context"
 	"os"
 	"strconv"
@@ -22,7 +24,7 @@ func main() {
 
 	// test code
 	db.InsertCandidate(context.Background(), &db.Candidate{
-		Name:     "김슬기",
+		Name:     "이슬기",
 		Markdown: "## 나",
 	})
 
@@ -53,13 +55,17 @@ func main() {
 	app.Post("/voter/register/request", register.PhoneService)
 	app.Post("/voter/register/cert", register.CertService)
 
+	app.Get("/voter/info/:id", voter_info.GetService)
+
 	app.Get("/candidate", candidate.GetService)
 	app.Get("/candidate/:name", candidate.GetAService)
 
 	app.Post("/vote/request", vote.RequestService)
 	app.Post("/vote/submit", vote.SubmitService)
 
-	app.Post("/stats/reply", stats.StatsService)
+	app.Get("/paper/info/:id", paper_info.GetService)
+
+	app.Post("/survey/reply", survey.PostService)
 
 	app.Listen(":9999")
 }
