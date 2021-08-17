@@ -14,16 +14,16 @@ class Data extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Candidate', protoName: 'Candidate')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Gender', protoName: 'Gender')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Age', $pb.PbFieldType.O3, protoName: 'Age')
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Region', $pb.PbFieldType.O3, protoName: 'Region')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Job', $pb.PbFieldType.O3, protoName: 'Job')
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Education', $pb.PbFieldType.O3, protoName: 'Education')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Region', protoName: 'Region')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Job', protoName: 'Job')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Education', protoName: 'Education')
     ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Married', protoName: 'Married')
     ..aOB(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Divorced', protoName: 'Divorced')
     ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'HasCar', protoName: 'HasCar')
-    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'HouseType', $pb.PbFieldType.O3, protoName: 'HouseType')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'HouseType', protoName: 'HouseType')
     ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Salary', $pb.PbFieldType.O3, protoName: 'Salary')
     ..aOB(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'HasDebt', protoName: 'HasDebt')
-    ..a<$core.int>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Ideology', $pb.PbFieldType.O3, protoName: 'Ideology')
+    ..aOS(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Ideology', protoName: 'Ideology')
     ..a<$core.List<$core.int>>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'VoterID', $pb.PbFieldType.OY, protoName: 'VoterID')
     ..hasRequiredFields = false
   ;
@@ -33,16 +33,16 @@ class Data extends $pb.GeneratedMessage {
     $core.String? candidate,
     $core.bool? gender,
     $core.int? age,
-    $core.int? region,
-    $core.int? job,
-    $core.int? education,
+    $core.String? region,
+    $core.String? job,
+    $core.String? education,
     $core.bool? married,
     $core.bool? divorced,
     $core.bool? hasCar,
-    $core.int? houseType,
+    $core.String? houseType,
     $core.int? salary,
     $core.bool? hasDebt,
-    $core.int? ideology,
+    $core.String? ideology,
     $core.List<$core.int>? voterID,
   }) {
     final _result = create();
@@ -139,27 +139,27 @@ class Data extends $pb.GeneratedMessage {
   void clearAge() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get region => $_getIZ(3);
+  $core.String get region => $_getSZ(3);
   @$pb.TagNumber(4)
-  set region($core.int v) { $_setSignedInt32(3, v); }
+  set region($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasRegion() => $_has(3);
   @$pb.TagNumber(4)
   void clearRegion() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.int get job => $_getIZ(4);
+  $core.String get job => $_getSZ(4);
   @$pb.TagNumber(5)
-  set job($core.int v) { $_setSignedInt32(4, v); }
+  set job($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasJob() => $_has(4);
   @$pb.TagNumber(5)
   void clearJob() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.int get education => $_getIZ(5);
+  $core.String get education => $_getSZ(5);
   @$pb.TagNumber(6)
-  set education($core.int v) { $_setSignedInt32(5, v); }
+  set education($core.String v) { $_setString(5, v); }
   @$pb.TagNumber(6)
   $core.bool hasEducation() => $_has(5);
   @$pb.TagNumber(6)
@@ -193,9 +193,9 @@ class Data extends $pb.GeneratedMessage {
   void clearHasCar() => clearField(9);
 
   @$pb.TagNumber(10)
-  $core.int get houseType => $_getIZ(9);
+  $core.String get houseType => $_getSZ(9);
   @$pb.TagNumber(10)
-  set houseType($core.int v) { $_setSignedInt32(9, v); }
+  set houseType($core.String v) { $_setString(9, v); }
   @$pb.TagNumber(10)
   $core.bool hasHouseType() => $_has(9);
   @$pb.TagNumber(10)
@@ -220,9 +220,9 @@ class Data extends $pb.GeneratedMessage {
   void clearHasDebt() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.int get ideology => $_getIZ(12);
+  $core.String get ideology => $_getSZ(12);
   @$pb.TagNumber(13)
-  set ideology($core.int v) { $_setSignedInt32(12, v); }
+  set ideology($core.String v) { $_setString(12, v); }
   @$pb.TagNumber(13)
   $core.bool hasIdeology() => $_has(12);
   @$pb.TagNumber(13)
