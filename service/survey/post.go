@@ -1,9 +1,8 @@
-package stats
+package survey
 
 import (
 	"alcor/db"
 	"alcor/model/stats"
-	"alcor/service/security"
 	"context"
 	"log"
 
@@ -12,15 +11,9 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func StatsService(c *fiber.Ctx) error {
-	_, data, err := security.Decapsulate(c.Body())
-	if err != nil {
-		log.Println(err)
-		return c.SendStatus(fasthttp.StatusBadRequest)
-	}
-
+func PostService(c *fiber.Ctx) error {
 	stats := new(stats.Data)
-	if err := proto.Unmarshal(data, stats); err != nil {
+	if err := proto.Unmarshal(c.Body(), stats); err != nil {
 		log.Println(err)
 		return c.SendStatus(fasthttp.StatusBadRequest)
 	}
@@ -33,7 +26,7 @@ func StatsService(c *fiber.Ctx) error {
 	}
 
 	if voter.RepliedSurvey {
-		log.Println(err)
+		log.Println("already submitted")
 		return c.SendStatus(fasthttp.StatusBadRequest)
 	}
 
@@ -41,13 +34,13 @@ func StatsService(c *fiber.Ctx) error {
 	statsdb.Age = int16(stats.Age)
 	statsdb.Candidate = stats.Candidate
 	statsdb.Divorced = stats.Divorced
-	statsdb.Education = int16(stats.Education)
+	statsdb.Education = stats.Education
 	statsdb.Gender = stats.Gender
 	statsdb.HasCar = stats.HasCar
 	statsdb.HasDebt = stats.HasDebt
-	statsdb.HouseType = int16(stats.HouseType)
-	statsdb.Ideology = int16(stats.Ideology)
-	statsdb.Job = int16(stats.Job)
+	statsdb.HouseType = stats.HouseType
+	statsdb.Ideology = stats.Ideology
+	statsdb.Job = stats.Job
 	statsdb.Married = stats.Married
 	if err := db.InsertData(context.Background(), statsdb); err != nil {
 		log.Println(err)
