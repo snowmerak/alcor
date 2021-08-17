@@ -128,16 +128,16 @@ func Init() {
 			create required property candidate -> str;
 			create property gender -> bool;
 			create property age -> int16;
-			create property region -> int16;
-			create property job -> int16;
-			create property education -> int16;
+			create property region -> str;
+			create property job -> str;
+			create property education -> str;
 			create property married -> bool;
 			create property divorced -> bool;
 			create property has_car -> bool;
-			create property house_type -> int16;
+			create property house_type -> str;
 			create property salary -> int16;
 			create property has_debt -> bool;
-			create property ideology -> int16;
+			create property ideology -> str;
 		}
 		`
 		if err := Voters.Execute(GlobalCtx, cmd); err != nil {

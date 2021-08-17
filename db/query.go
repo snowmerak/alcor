@@ -179,19 +179,19 @@ func InsertBundle(ctx context.Context, bundle *Bundle) error {
 func InsertData(ctx context.Context, data *Data) error {
 	id := new(ID)
 	cmd := `
-	candidate = $0
-	gender = $1
-	age = $2
-	region = $3
-	job = $4
-	education = $5
-	married = $6
-	divorced = $7
-	has_car = $8
-	house_type = $9
-	salary = $10
-	has_debt = $11
-	ideology = $12
+	candidate = <str>$0
+	gender = <bool>$1
+	age = <int16>$2
+	region = <str>$3
+	job = <str>$4
+	education = <str>$5
+	married = <bool>$6
+	divorced = <bool>$7
+	has_car = <bool>$8
+	house_type = <str>$9
+	salary = <int16>$10
+	has_debt = <bool>$11
+	ideology = <str>$12
 	`
 	return Papers.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology)
 }

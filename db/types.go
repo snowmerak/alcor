@@ -52,14 +52,14 @@ type Data struct {
 	Candidate string      `edgedb:"candidate"`
 	Gender    bool        `edgedb:"gender"`
 	Age       int16       `edgedb:"age"`
-	Region    int16       `edgedb:"region"`
-	Job       int16       `edgedb:"job"`
-	Education int16       `edgedb:"education"`
+	Region    string      `edgedb:"region"`
+	Job       string      `edgedb:"job"`
+	Education string      `edgedb:"education"`
 	Married   bool        `edgedb:"married"`
 	Divorced  bool        `edgedb:"divorced"`
 	HasCar    bool        `edgedb:"has_car"`
-	HouseType int16       `edgedb:"house_type"`
+	HouseType string      `edgedb:"house_type"`
 	Salary    int16       `edgedb:"salary"`
 	HasDebt   bool        `edgedb:"has_debt"`
-	Ideology  int16       `edgedb:"ideology"`
+	Ideology  string      `edgedb:"ideology"`
 }
