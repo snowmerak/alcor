@@ -238,3 +238,44 @@ class Data extends $pb.GeneratedMessage {
   void clearVoterID() => clearField(14);
 }
 
+class List_ extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'List', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'stats'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Data', protoName: 'Data')
+    ..hasRequiredFields = false
+  ;
+
+  List_._() : super();
+  factory List_({
+    $core.Iterable<$core.String>? data,
+  }) {
+    final _result = create();
+    if (data != null) {
+      _result.data.addAll(data);
+    }
+    return _result;
+  }
+  factory List_.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory List_.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  List_ clone() => List_()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  List_ copyWith(void Function(List_) updates) => super.copyWith((message) => updates(message as List_)) as List_; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static List_ create() => List_._();
+  List_ createEmptyInstance() => create();
+  static $pb.PbList<List_> createRepeated() => $pb.PbList<List_>();
+  @$core.pragma('dart2js:noInline')
+  static List_ getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<List_>(create);
+  static List_? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get data => $_getList(0);
+}
+

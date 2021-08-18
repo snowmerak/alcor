@@ -31,3 +31,13 @@ const Data$json = const {
 
 /// Descriptor for `Data`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List dataDescriptor = $convert.base64Decode('CgREYXRhEhwKCUNhbmRpZGF0ZRgBIAEoCVIJQ2FuZGlkYXRlEhYKBkdlbmRlchgCIAEoCFIGR2VuZGVyEhAKA0FnZRgDIAEoBVIDQWdlEhYKBlJlZ2lvbhgEIAEoCVIGUmVnaW9uEhAKA0pvYhgFIAEoCVIDSm9iEhwKCUVkdWNhdGlvbhgGIAEoCVIJRWR1Y2F0aW9uEhgKB01hcnJpZWQYByABKAhSB01hcnJpZWQSGgoIRGl2b3JjZWQYCCABKAhSCERpdm9yY2VkEhYKBkhhc0NhchgJIAEoCFIGSGFzQ2FyEhwKCUhvdXNlVHlwZRgKIAEoCVIJSG91c2VUeXBlEhYKBlNhbGFyeRgLIAEoBVIGU2FsYXJ5EhgKB0hhc0RlYnQYDCABKAhSB0hhc0RlYnQSGgoISWRlb2xvZ3kYDSABKAlSCElkZW9sb2d5EhgKB1ZvdGVySUQYDiABKAxSB1ZvdGVySUQ=');
+@$core.Deprecated('Use list_Descriptor instead')
+const List_$json = const {
+  '1': 'List',
+  '2': const [
+    const {'1': 'Data', '3': 1, '4': 3, '5': 9, '10': 'Data'},
+  ],
+};
+
+/// Descriptor for `List`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List list_Descriptor = $convert.base64Decode('CgRMaXN0EhIKBERhdGEYASADKAlSBERhdGE=');

@@ -1,5 +1,5 @@
 import 'package:alcor/controllers/survey.dart';
-import 'package:alcor/service/submitSurvay.dart';
+import 'package:alcor/service/survay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,8 +14,12 @@ class SurveyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var c = Get.put(SurveyController());
-    c.regions = ['서울특별시', '광주광역시', '대구광역시', '대전광역시', '부산광역시', '울산광역시', '인천광역시'];
+    Get.put(SurveyController());
+    getRegions();
+    getJobs();
+    getEducations();
+    getHouseTypes();
+    getIdeologys();
     return Scaffold(
       appBar: AppBar(
         title: Text('설문 조사'),
