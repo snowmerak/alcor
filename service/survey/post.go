@@ -22,7 +22,7 @@ func PostService(c *fiber.Ctx) error {
 	voter.HashID = stats.VoterID
 	if err := db.SelectVoter(context.Background(), voter); err != nil {
 		log.Println(err)
-		return c.SendStatus(fasthttp.StatusConflict)
+		return c.SendStatus(fasthttp.StatusNotFound)
 	}
 
 	if voter.RepliedSurvey {
