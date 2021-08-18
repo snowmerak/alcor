@@ -118,7 +118,7 @@ func NotExistEnrolled(ctx context.Context, enrolled *Enrolled) bool {
 	if err := Voters.QueryOne(ctx, cmd, enrolled, enrolled.Name, enrolled.PrivateNumber, enrolled.Name); err != nil {
 		return true
 	}
-	return enrolled.ID.String() == ""
+	return false
 }
 
 func InsertEnrolled(ctx context.Context, enrolled *Enrolled) error {
@@ -179,19 +179,21 @@ func InsertBundle(ctx context.Context, bundle *Bundle) error {
 func InsertData(ctx context.Context, data *Data) error {
 	id := new(ID)
 	cmd := `
-	candidate = <str>$0
-	gender = <bool>$1
-	age = <int16>$2
-	region = <str>$3
-	job = <str>$4
-	education = <str>$5
-	married = <bool>$6
-	divorced = <bool>$7
-	has_car = <bool>$8
-	house_type = <str>$9
-	salary = <int16>$10
-	has_debt = <bool>$11
-	ideology = <str>$12
+	insert Data {
+		candidate := <str>$0
+		gender := <bool>$1
+		age := <int16>$2
+		region := <str>$3
+		job := <str>$4
+		education := <str>$5
+		married := <bool>$6
+		divorced := <bool>$7
+		has_car := <bool>$8
+		house_type := <str>$9
+		salary := <int16>$10
+		has_debt := <bool>$11
+		ideology := <str>$12
+	}
 	`
 	return Papers.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology)
 }
