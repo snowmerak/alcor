@@ -67,5 +67,11 @@ func main() {
 
 	app.Post("/survey/reply", survey.PostService)
 
+	app.Get("/survey/regions", survey.GetRegions)
+	app.Get("/survey/jobs", survey.GetJobs)
+	app.Get("/survey/educations", survey.GetEducations)
+	app.Get("/survey/house_types", survey.GetsHouseTypes)
+	app.Get("/survey/ideologys", survey.GetIdeologys)
+
 	app.Listen(":9999")
 }
