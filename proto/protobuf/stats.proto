@@ -20,3 +20,7 @@ message Data {
 	string Ideology = 13;
 	bytes VoterID = 14;
 }
+
+message List {
+	repeated string Data = 1;
+}
