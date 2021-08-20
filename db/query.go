@@ -164,6 +164,19 @@ func InsertPaper(ctx context.Context, paper *Paper) error {
 	return Papers.QueryOne(ctx, cmd, id, paper.VoterID, paper.Timestamp, paper.Message, paper.RandomBytes, paper.Hash, paper.Signature)
 }
 
+func SelectBundle(ctx context.Context, bundle *Bundle) error {
+	cmd := `
+	select Paper {
+		hash,
+		step,
+		sub_hashes,
+	}
+	filter Bundle.hash = <bytes>$0
+	limit 1
+	`
+	return Papers.QueryOne(ctx, cmd, bundle, bundle.Hash)
+}
+
 func InsertBundle(ctx context.Context, bundle *Bundle) error {
 	id := new(ID)
 	cmd := `
@@ -180,19 +193,19 @@ func InsertData(ctx context.Context, data *Data) error {
 	id := new(ID)
 	cmd := `
 	insert Data {
-		candidate := <str>$0
-		gender := <bool>$1
-		age := <int16>$2
-		region := <str>$3
-		job := <str>$4
-		education := <str>$5
-		married := <bool>$6
-		divorced := <bool>$7
-		has_car := <bool>$8
-		house_type := <str>$9
-		salary := <int16>$10
-		has_debt := <bool>$11
-		ideology := <str>$12
+		candidate := <str>$0,
+		gender := <bool>$1,
+		age := <int16>$2,
+		region := <str>$3,
+		job := <str>$4,
+		education := <str>$5,
+		married := <bool>$6,
+		divorced := <bool>$7,
+		has_car := <bool>$8,
+		house_type := <str>$9,
+		salary := <int16>$10,
+		has_debt := <bool>$11,
+		ideology := <str>$12,
 	}
 	`
 	return Papers.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology)
