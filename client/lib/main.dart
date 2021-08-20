@@ -5,6 +5,7 @@ import 'package:alcor/pages/candidateDetail.dart';
 import 'package:alcor/pages/index.dart';
 import 'package:alcor/pages/receipt.dart';
 import 'package:alcor/pages/register.dart';
+import 'package:alcor/pages/selection.dart';
 import 'package:alcor/pages/survey.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: candidateDetailRoute, page: () => CandidateDetailPage()),
         GetPage(name: receiptRoute, page: () => ReceiptPage()),
         GetPage(name: surveyRoute, page: () => SurveyPage()),
+        GetPage(name: selectionRoute, page: () => SurveySelectionPage()),
       ],
     );
   }

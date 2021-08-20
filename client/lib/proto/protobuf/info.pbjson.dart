@@ -39,3 +39,15 @@ const Paper$json = const {
 
 /// Descriptor for `Paper`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List paperDescriptor = $convert.base64Decode('CgVQYXBlchIYCgdWb3RlcklEGAEgASgMUgdWb3RlcklEEhwKCVRpbWVzdGFtcBgCIAEoDFIJVGltZXN0YW1wEhgKB01lc3NhZ2UYAyABKAxSB01lc3NhZ2USIAoLUmFuZG9tQnl0ZXMYBCABKAxSC1JhbmRvbUJ5dGVzEhIKBEhhc2gYBSABKAxSBEhhc2gSHAoJU2lnbmF0dXJlGAYgASgMUglTaWduYXR1cmU=');
+@$core.Deprecated('Use bundleDescriptor instead')
+const Bundle$json = const {
+  '1': 'Bundle',
+  '2': const [
+    const {'1': 'Hash', '3': 1, '4': 1, '5': 12, '10': 'Hash'},
+    const {'1': 'Prev', '3': 2, '4': 1, '5': 12, '10': 'Prev'},
+    const {'1': 'SubHashes', '3': 3, '4': 3, '5': 12, '10': 'SubHashes'},
+  ],
+};
+
+/// Descriptor for `Bundle`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bundleDescriptor = $convert.base64Decode('CgZCdW5kbGUSEgoESGFzaBgBIAEoDFIESGFzaBISCgRQcmV2GAIgASgMUgRQcmV2EhwKCVN1Ykhhc2hlcxgDIAMoDFIJU3ViSGFzaGVz');

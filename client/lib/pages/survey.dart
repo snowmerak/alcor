@@ -1,4 +1,6 @@
+import 'package:alcor/controllers/selection.dart';
 import 'package:alcor/controllers/survey.dart';
+import 'package:alcor/pages/selection.dart';
 import 'package:alcor/service/survay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +17,7 @@ class SurveyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SurveyController());
+    final selectionController = Get.put(SelectionController());
     getRegions();
     getJobs();
     getEducations();
@@ -85,17 +88,16 @@ class SurveyPage extends StatelessWidget {
                         fontSize: fontSize,
                       ),
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        controller.survey.region = value;
-                        controller.update();
-                      },
-                      itemBuilder: (context) => controller.regions
-                          .map((e) => PopupMenuItem(
-                                child: Text(e),
-                                value: e,
-                              ))
-                          .toList(),
+                    IconButton(
+                        onPressed: () async {
+                          selectionController.title = '거주지 선택';
+                          selectionController.list = List.from(controller.regions);
+                          selectionController.filtered = List.from(controller.regions);
+                          Get.toNamed(selectionRoute);
+                          controller.survey.region = (await selectionController.selected.receive()).data!;
+                          controller.update();
+                        },
+                        icon: Icon(Icons.zoom_in),
                     ),
                     Text(
                       controller.survey.region,
@@ -116,17 +118,16 @@ class SurveyPage extends StatelessWidget {
                         fontSize: fontSize,
                       ),
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        controller.survey.job = value;
+                    IconButton(
+                      onPressed: () async {
+                        selectionController.title = '직업 선택';
+                        selectionController.list = List.from(controller.jobs);
+                        selectionController.filtered = List.from(controller.jobs);
+                        Get.toNamed(selectionRoute);
+                        controller.survey.job = (await selectionController.selected.receive()).data!;
                         controller.update();
                       },
-                      itemBuilder: (context) => controller.jobs
-                          .map((e) => PopupMenuItem(
-                                child: Text(e),
-                                value: e,
-                              ))
-                          .toList(),
+                      icon: Icon(Icons.zoom_in),
                     ),
                     Text(
                       controller.survey.job,
@@ -147,17 +148,16 @@ class SurveyPage extends StatelessWidget {
                         fontSize: fontSize,
                       ),
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        controller.survey.education = value;
+                    IconButton(
+                      onPressed: () async {
+                        selectionController.title = '학력 선택';
+                        selectionController.list = List.from(controller.educations);
+                        selectionController.filtered = List.from(controller.educations);
+                        Get.toNamed(selectionRoute);
+                        controller.survey.education = (await selectionController.selected.receive()).data!;
                         controller.update();
                       },
-                      itemBuilder: (context) => controller.educations
-                          .map((e) => PopupMenuItem(
-                                child: Text(e),
-                                value: e,
-                              ))
-                          .toList(),
+                      icon: Icon(Icons.zoom_in),
                     ),
                     Text(
                       controller.survey.education,
@@ -248,17 +248,16 @@ class SurveyPage extends StatelessWidget {
                         fontSize: fontSize,
                       ),
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        controller.survey.houseType = value;
+                    IconButton(
+                      onPressed: () async {
+                        selectionController.title = '거주 형태 선택';
+                        selectionController.list = List.from(controller.houseTypes);
+                        selectionController.filtered = List.from(controller.houseTypes);
+                        Get.toNamed(selectionRoute);
+                        controller.survey.houseType = (await selectionController.selected.receive()).data!;
                         controller.update();
                       },
-                      itemBuilder: (context) => controller.houseTypes
-                          .map((e) => PopupMenuItem(
-                                child: Text(e),
-                                value: e,
-                              ))
-                          .toList(),
+                      icon: Icon(Icons.zoom_in),
                     ),
                     Text(
                       controller.survey.houseType,
@@ -349,17 +348,16 @@ class SurveyPage extends StatelessWidget {
                         fontSize: fontSize,
                       ),
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        controller.survey.ideology = value;
+                    IconButton(
+                      onPressed: () async {
+                        selectionController.title = '이데올로기 선택';
+                        selectionController.list = List.from(controller.ideologys);
+                        selectionController.filtered = List.from(controller.ideologys);
+                        Get.toNamed(selectionRoute);
+                        controller.survey.ideology = (await selectionController.selected.receive()).data!;
                         controller.update();
                       },
-                      itemBuilder: (context) => controller.ideologys
-                          .map((e) => PopupMenuItem(
-                                child: Text(e),
-                                value: e,
-                              ))
-                          .toList(),
+                      icon: Icon(Icons.zoom_in),
                     ),
                     Text(
                       controller.survey.ideology,

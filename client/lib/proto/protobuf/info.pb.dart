@@ -257,3 +257,72 @@ class Paper extends $pb.GeneratedMessage {
   void clearSignature() => clearField(6);
 }
 
+class Bundle extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Bundle', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'auth'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Hash', $pb.PbFieldType.OY, protoName: 'Hash')
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Prev', $pb.PbFieldType.OY, protoName: 'Prev')
+    ..p<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'SubHashes', $pb.PbFieldType.PY, protoName: 'SubHashes')
+    ..hasRequiredFields = false
+  ;
+
+  Bundle._() : super();
+  factory Bundle({
+    $core.List<$core.int>? hash,
+    $core.List<$core.int>? prev,
+    $core.Iterable<$core.List<$core.int>>? subHashes,
+  }) {
+    final _result = create();
+    if (hash != null) {
+      _result.hash = hash;
+    }
+    if (prev != null) {
+      _result.prev = prev;
+    }
+    if (subHashes != null) {
+      _result.subHashes.addAll(subHashes);
+    }
+    return _result;
+  }
+  factory Bundle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Bundle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Bundle clone() => Bundle()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Bundle copyWith(void Function(Bundle) updates) => super.copyWith((message) => updates(message as Bundle)) as Bundle; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Bundle create() => Bundle._();
+  Bundle createEmptyInstance() => create();
+  static $pb.PbList<Bundle> createRepeated() => $pb.PbList<Bundle>();
+  @$core.pragma('dart2js:noInline')
+  static Bundle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Bundle>(create);
+  static Bundle? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get hash => $_getN(0);
+  @$pb.TagNumber(1)
+  set hash($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHash() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHash() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get prev => $_getN(1);
+  @$pb.TagNumber(2)
+  set prev($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPrev() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPrev() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.List<$core.int>> get subHashes => $_getList(2);
+}
+

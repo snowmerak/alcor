@@ -26,6 +26,9 @@ class CandidatePage extends StatelessWidget {
           return ListView.separated(
               itemBuilder: (context, index) {
                 return TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.black87,
+                  ),
                   onPressed: () {
                     detailController.updateName(controller.names[index]);
                     Get.toNamed(candidateDetailRoute);
