@@ -2,6 +2,7 @@ package hashbuffer
 
 import (
 	"alcor/db"
+	"alcor/worker/bundle_cache"
 	"alcor/worker/hashbuffer/ringbuffer"
 	"context"
 	"crypto/sha512"
@@ -38,7 +39,10 @@ func NewRingError(data string) HashRingError {
 }
 
 func Observe() {
-	prev := []byte{}
+	prev, err := bundle_cache.Get("last")
+	if err != nil {
+		prev = []byte{}
+	}
 	for {
 		list := make([][]byte, 8)
 		DeQueue(list)
@@ -50,7 +54,8 @@ func Observe() {
 		for _, v := range bundle.SubHashes {
 			sha.Write(v)
 		}
-		bundle.Hash = sha.Sum(nil)
+		hashed := sha512.Sum512(sha.Sum(nil))
+		bundle.Hash = hashed[:]
 		if err := db.InsertBundle(context.Background(), bundle); err != nil {
 			jumper.Offer(NewRingError(err.Error()))
 			go func(list [][]byte) {
@@ -60,6 +65,7 @@ func Observe() {
 			}(list)
 			continue
 		}
+		bundle_cache.Set("last", hashed[:])
 		prev = bundle.Prev
 	}
 }
