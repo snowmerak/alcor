@@ -22,3 +22,9 @@ message Paper {
 	bytes Hash = 5;
 	bytes Signature = 6;
 }
+
+message Bundle {
+	bytes Hash = 1;
+	bytes Prev = 2;
+	repeated bytes SubHashes = 3;
+}
