@@ -1,4 +1,4 @@
-cd ./executable/server
+cd ./executable
 lis --make build
 docker compose build
 docker compose up
