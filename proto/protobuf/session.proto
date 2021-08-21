@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-package session;
-
-option go_package = "model/session";
-
