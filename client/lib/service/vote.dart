@@ -25,7 +25,8 @@ Future<void> requestKeybytes() async {
           body: capsule.writeToBuffer())
       .then((value) async {
     if (value.statusCode == 200) {
-      voteController.paper.randomBytes = await decapsulate(value.bodyBytes.toList());
+      voteController.paper.randomBytes =
+          await decapsulate(value.bodyBytes.toList());
       voteController.receiveKey.send(true);
     } else {
       await Get.defaultDialog(
@@ -49,20 +50,19 @@ Future<void> submitPaper() async {
   }
   var paper = Get.find<VoteController>().paper;
   var now = DateTime.now();
-  paper.timestamp =
-      now.millisecondsSinceEpoch.toRadixString(16).codeUnits;
+  paper.timestamp = now.millisecondsSinceEpoch.toRadixString(16).codeUnits;
   receiptController.time = now;
   paper.voterId = Hive.box<Uint8List>(configController.domain).get('id')!;
   receiptController.voterID = paper.voterId;
   paper.message =
       utf8.encoder.convert(Get.find<CandidateDetailController>().name);
   receiptController.candidate = Get.find<CandidateDetailController>().name;
-  paper.hash = sha512
+  paper.hash = sha256
       .convert(
           paper.randomBytes + paper.voterId + paper.timestamp + paper.message)
       .bytes;
   var privateKey = PrivateKey.fromBytes(
-      getP521(),
+      getP256(),
       Hive.box<Uint8List>(configController.domain)
           .get('private_key')!
           .toList());
@@ -79,13 +79,13 @@ Future<void> submitPaper() async {
     if (value.statusCode == 200) {
       var id = await decapsulate(value.bodyBytes);
       await Get.defaultDialog(
-          title: '투표를 등록하였습니다.',
-          middleText: 'paper id: ${id.toString()}');
+          title: '투표를 등록하였습니다.', middleText: 'paper id: ${id.toString()}');
       receiptController.hash = id;
       Get.toNamed(receiptRoute);
     } else {
       await Get.defaultDialog(
-          title: '투표를 완료할 수 없습니다.', middleText: value.statusCode.toString() + ' ' + value.body);
+          title: '투표를 완료할 수 없습니다.',
+          middleText: value.statusCode.toString() + ' ' + value.body);
     }
   }).onError((error, stackTrace) async => await Get.defaultDialog(
           title: '투표를 완료할 수 없습니다.', middleText: error.toString()));

@@ -46,7 +46,7 @@ Future<void> registerCall(BuildContext context) async {
 Future<void> registerCert(BuildContext context) async {
   var configController = Get.find<ConfigController>();
   var registerController = Get.find<RegisterController>();
-  var privateKey = getP521().generatePrivateKey();
+  var privateKey = getP256().generatePrivateKey();
   var publicKey = privateKey.publicKey;
   var cert = CertCode();
   cert.code = registerController.certCode.codeUnits;
