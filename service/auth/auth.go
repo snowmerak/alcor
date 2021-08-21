@@ -16,7 +16,7 @@ func SerializePrivateKey(pr *ecdsa.PrivateKey) ([]byte, error) {
 }
 
 func DeserializePrivateKey(bs []byte) (*ecdsa.PrivateKey, error) {
-	pr, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
+	pr, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func SerializePublicKey(pb *ecdsa.PublicKey) ([]byte, error) {
 }
 
 func DeserializePublicKey(bs []byte) (*ecdsa.PublicKey, error) {
-	pr, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
+	pr, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		return nil, err
 	}

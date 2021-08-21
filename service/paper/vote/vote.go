@@ -11,7 +11,7 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"crypto/rand"
-	"crypto/sha512"
+	"crypto/sha256"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -107,7 +107,7 @@ func SubmitService(c *fiber.Ctx) error {
 		return c.Send([]byte("already voted"))
 	}
 
-	sha := sha512.New()
+	sha := sha256.New()
 	sha.Write(p.RandomBytes)
 	sha.Write(p.VoterId)
 	sha.Write(p.Timestamp)
