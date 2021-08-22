@@ -3,7 +3,7 @@ package bundle
 import (
 	"alcor/db"
 	"alcor/model/info"
-	"alcor/worker/bundle_cache"
+	"alcor/worker/rdb"
 	"context"
 	"encoding/base64"
 
@@ -13,7 +13,7 @@ import (
 )
 
 func GetLast(c *fiber.Ctx) error {
-	data, err := bundle_cache.Get("last")
+	data, err := rdb.GetLastBundle()
 	if err != nil {
 		return c.SendStatus(fasthttp.StatusNotFound)
 	}
