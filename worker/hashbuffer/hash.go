@@ -2,8 +2,8 @@ package hashbuffer
 
 import (
 	"alcor/db"
-	"alcor/worker/bundle_cache"
 	"alcor/worker/hashbuffer/ringbuffer"
+	"alcor/worker/rdb"
 	"context"
 	"crypto/sha512"
 
@@ -39,7 +39,7 @@ func NewRingError(data string) HashRingError {
 }
 
 func Observe() {
-	prev, err := bundle_cache.Get("last")
+	prev, err := rdb.GetLastBundle()
 	if err != nil {
 		prev = []byte{}
 	}
@@ -65,7 +65,7 @@ func Observe() {
 			}(list)
 			continue
 		}
-		bundle_cache.Set("last", hashed[:])
+		rdb.SetLastBundle(hashed[:])
 		prev = bundle.Prev
 	}
 }
