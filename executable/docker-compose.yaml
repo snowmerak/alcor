@@ -43,11 +43,11 @@ services:
         networks:
             - keybytes
 
-    bundle_caches:
-        image: memcached:latest
+    rdb:
+        image: redis:latest
         restart: on-failure
         networks:
-            - bundle_caches
+            - rdb
     
     alcor:
         build:
@@ -67,18 +67,21 @@ services:
             - sessions
             - keybytes
             - certcodes
+            - rdb
         depends_on: 
             - voters
             - papers
             - sessions
             - keybytes
             - certcodes
+            - rdb
         networks:
             - voteredge
             - paperedge
             - sessions
             - keybytes
             - certcodes
+            - rdb
 
 networks:
     voteredge:
@@ -86,4 +89,4 @@ networks:
     sessions:
     certcodes:
     keybytes:
-    bundle_caches:
+    rdb:
