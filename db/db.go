@@ -125,7 +125,8 @@ func Init() {
 	if err := Voters.Query(GlobalCtx, `select Data`, tempIDs); err != nil {
 		cmd := `
 		create type Data {
-			create required property candidate -> str;
+			create required property number -> int64;
+			create property candidate -> str;
 			create property gender -> bool;
 			create property age -> int16;
 			create property region -> str;

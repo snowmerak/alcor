@@ -62,4 +62,5 @@ type Data struct {
 	Salary    int16       `edgedb:"salary"`
 	HasDebt   bool        `edgedb:"has_debt"`
 	Ideology  string      `edgedb:"ideology"`
+	Number    int64       `edgedb:"number"`
 }

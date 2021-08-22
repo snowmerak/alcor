@@ -1,7 +1,9 @@
 package db
 
 import (
+	"alcor/worker/rdb"
 	"context"
+	"sync"
 )
 
 func SelectCandidate(ctx context.Context, candidate *Candidate) error {
@@ -189,10 +191,42 @@ func InsertBundle(ctx context.Context, bundle *Bundle) error {
 	return Papers.QueryOne(ctx, cmd, id, bundle.Hash, bundle.Prev, bundle.SubHashes)
 }
 
+func SelectData(ctx context.Context, data *Data) error {
+	cmd := `
+	select Data {
+		candidate,
+		gender,
+		age,
+		region,
+		job,
+		education,
+		married,
+		divorced,
+		has_car,
+		house_type,
+		salary,
+		has_debt,
+		ideology,
+	}
+	filter Data.number = <int64>$0
+	limit 1
+	`
+	return Voters.QueryOne(ctx, cmd, data, data.Number)
+}
+
+var insertDataLock = sync.Mutex{}
+
 func InsertData(ctx context.Context, data *Data) error {
+	insertDataLock.Lock()
+	defer insertDataLock.Unlock()
 	id := new(ID)
+	number, err := rdb.GetSurveyIndex()
+	if err != nil {
+		number = 0
+	}
 	cmd := `
 	insert Data {
+		number := <int64>$13,
 		candidate := <str>$0,
 		gender := <bool>$1,
 		age := <int16>$2,
@@ -208,5 +242,12 @@ func InsertData(ctx context.Context, data *Data) error {
 		ideology := <str>$12,
 	}
 	`
-	return Papers.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology)
+	if err := Voters.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology, number); err != nil {
+		return err
+	}
+	number++
+	if err := rdb.SetSurveyIndex(number); err != nil {
+		return err
+	}
+	return nil
 }
