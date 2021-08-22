@@ -19,8 +19,13 @@ message Data {
 	bool HasDebt = 12;
 	string Ideology = 13;
 	bytes VoterID = 14;
+	int64 Number = 15;
 }
 
 message List {
 	repeated string Data = 1;
+}
+
+message NumberList {
+	repeated int64 Data = 1;
 }
