@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class Data extends $pb.GeneratedMessage {
@@ -25,6 +26,7 @@ class Data extends $pb.GeneratedMessage {
     ..aOB(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'HasDebt', protoName: 'HasDebt')
     ..aOS(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Ideology', protoName: 'Ideology')
     ..a<$core.List<$core.int>>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'VoterID', $pb.PbFieldType.OY, protoName: 'VoterID')
+    ..aInt64(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Number', protoName: 'Number')
     ..hasRequiredFields = false
   ;
 
@@ -44,6 +46,7 @@ class Data extends $pb.GeneratedMessage {
     $core.bool? hasDebt,
     $core.String? ideology,
     $core.List<$core.int>? voterID,
+    $fixnum.Int64? number,
   }) {
     final _result = create();
     if (candidate != null) {
@@ -87,6 +90,9 @@ class Data extends $pb.GeneratedMessage {
     }
     if (voterID != null) {
       _result.voterID = voterID;
+    }
+    if (number != null) {
+      _result.number = number;
     }
     return _result;
   }
@@ -236,6 +242,15 @@ class Data extends $pb.GeneratedMessage {
   $core.bool hasVoterID() => $_has(13);
   @$pb.TagNumber(14)
   void clearVoterID() => clearField(14);
+
+  @$pb.TagNumber(15)
+  $fixnum.Int64 get number => $_getI64(14);
+  @$pb.TagNumber(15)
+  set number($fixnum.Int64 v) { $_setInt64(14, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasNumber() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearNumber() => clearField(15);
 }
 
 class List_ extends $pb.GeneratedMessage {
@@ -277,5 +292,46 @@ class List_ extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$core.String> get data => $_getList(0);
+}
+
+class NumberList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NumberList', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'stats'), createEmptyInstance: create)
+    ..p<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Data', $pb.PbFieldType.P6, protoName: 'Data')
+    ..hasRequiredFields = false
+  ;
+
+  NumberList._() : super();
+  factory NumberList({
+    $core.Iterable<$fixnum.Int64>? data,
+  }) {
+    final _result = create();
+    if (data != null) {
+      _result.data.addAll(data);
+    }
+    return _result;
+  }
+  factory NumberList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NumberList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NumberList clone() => NumberList()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NumberList copyWith(void Function(NumberList) updates) => super.copyWith((message) => updates(message as NumberList)) as NumberList; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NumberList create() => NumberList._();
+  NumberList createEmptyInstance() => create();
+  static $pb.PbList<NumberList> createRepeated() => $pb.PbList<NumberList>();
+  @$core.pragma('dart2js:noInline')
+  static NumberList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NumberList>(create);
+  static NumberList? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$fixnum.Int64> get data => $_getList(0);
 }
 

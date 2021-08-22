@@ -26,11 +26,12 @@ const Data$json = const {
     const {'1': 'HasDebt', '3': 12, '4': 1, '5': 8, '10': 'HasDebt'},
     const {'1': 'Ideology', '3': 13, '4': 1, '5': 9, '10': 'Ideology'},
     const {'1': 'VoterID', '3': 14, '4': 1, '5': 12, '10': 'VoterID'},
+    const {'1': 'Number', '3': 15, '4': 1, '5': 3, '10': 'Number'},
   ],
 };
 
 /// Descriptor for `Data`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dataDescriptor = $convert.base64Decode('CgREYXRhEhwKCUNhbmRpZGF0ZRgBIAEoCVIJQ2FuZGlkYXRlEhYKBkdlbmRlchgCIAEoCFIGR2VuZGVyEhAKA0FnZRgDIAEoBVIDQWdlEhYKBlJlZ2lvbhgEIAEoCVIGUmVnaW9uEhAKA0pvYhgFIAEoCVIDSm9iEhwKCUVkdWNhdGlvbhgGIAEoCVIJRWR1Y2F0aW9uEhgKB01hcnJpZWQYByABKAhSB01hcnJpZWQSGgoIRGl2b3JjZWQYCCABKAhSCERpdm9yY2VkEhYKBkhhc0NhchgJIAEoCFIGSGFzQ2FyEhwKCUhvdXNlVHlwZRgKIAEoCVIJSG91c2VUeXBlEhYKBlNhbGFyeRgLIAEoBVIGU2FsYXJ5EhgKB0hhc0RlYnQYDCABKAhSB0hhc0RlYnQSGgoISWRlb2xvZ3kYDSABKAlSCElkZW9sb2d5EhgKB1ZvdGVySUQYDiABKAxSB1ZvdGVySUQ=');
+final $typed_data.Uint8List dataDescriptor = $convert.base64Decode('CgREYXRhEhwKCUNhbmRpZGF0ZRgBIAEoCVIJQ2FuZGlkYXRlEhYKBkdlbmRlchgCIAEoCFIGR2VuZGVyEhAKA0FnZRgDIAEoBVIDQWdlEhYKBlJlZ2lvbhgEIAEoCVIGUmVnaW9uEhAKA0pvYhgFIAEoCVIDSm9iEhwKCUVkdWNhdGlvbhgGIAEoCVIJRWR1Y2F0aW9uEhgKB01hcnJpZWQYByABKAhSB01hcnJpZWQSGgoIRGl2b3JjZWQYCCABKAhSCERpdm9yY2VkEhYKBkhhc0NhchgJIAEoCFIGSGFzQ2FyEhwKCUhvdXNlVHlwZRgKIAEoCVIJSG91c2VUeXBlEhYKBlNhbGFyeRgLIAEoBVIGU2FsYXJ5EhgKB0hhc0RlYnQYDCABKAhSB0hhc0RlYnQSGgoISWRlb2xvZ3kYDSABKAlSCElkZW9sb2d5EhgKB1ZvdGVySUQYDiABKAxSB1ZvdGVySUQSFgoGTnVtYmVyGA8gASgDUgZOdW1iZXI=');
 @$core.Deprecated('Use list_Descriptor instead')
 const List_$json = const {
   '1': 'List',
@@ -41,3 +42,13 @@ const List_$json = const {
 
 /// Descriptor for `List`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List list_Descriptor = $convert.base64Decode('CgRMaXN0EhIKBERhdGEYASADKAlSBERhdGE=');
+@$core.Deprecated('Use numberListDescriptor instead')
+const NumberList$json = const {
+  '1': 'NumberList',
+  '2': const [
+    const {'1': 'Data', '3': 1, '4': 3, '5': 3, '10': 'Data'},
+  ],
+};
+
+/// Descriptor for `NumberList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List numberListDescriptor = $convert.base64Decode('CgpOdW1iZXJMaXN0EhIKBERhdGEYASADKANSBERhdGE=');
