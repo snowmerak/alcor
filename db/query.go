@@ -242,7 +242,7 @@ func InsertData(ctx context.Context, data *Data) error {
 		ideology := <str>$12,
 	}
 	`
-	if err := Voters.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology, number); err != nil {
+	if err := Voters.QueryOne(ctx, cmd, id, data.Candidate, data.Gender, data.Age, data.Region, data.Job, data.Education, data.Married, data.Divorced, data.HasCar, data.HouseType, data.Salary, data.HasDebt, data.Ideology, int64(number)); err != nil {
 		return err
 	}
 	number++
