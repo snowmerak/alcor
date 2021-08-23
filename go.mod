@@ -3,12 +3,10 @@ module alcor
 go 1.16
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.2.16 // indirect
 	github.com/aead/ecdh v0.2.0
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
 	github.com/edgedb/edgedb-go v0.7.0
-	github.com/fasthttp/websocket v1.4.3
-	github.com/go-redis/redis/v8 v8.11.3 // indirect
+	github.com/go-redis/redis/v8 v8.11.3
 	github.com/gofiber/fiber/v2 v2.17.0
 	github.com/lemon-mint/libuseful v1.0.4
 	github.com/snowmerak/jumper v0.0.1

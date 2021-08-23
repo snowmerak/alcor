@@ -2,6 +2,7 @@ package main
 
 import (
 	"alcor/db"
+	"alcor/service/admin"
 	"alcor/service/bundle"
 	"alcor/service/candidate"
 	paper_info "alcor/service/paper/info"
@@ -30,6 +31,8 @@ func main() {
 	})
 
 	app := fiber.New()
+
+	adminPassword := os.Getenv("ADMIN_PASSWORD")
 
 	max, err := strconv.Atoi(os.Getenv("MAX_CONNECTION"))
 	if err != nil {
@@ -76,6 +79,8 @@ func main() {
 	app.Get("/survey/educations", survey.GetEducations)
 	app.Get("/survey/house_types", survey.GetsHouseTypes)
 	app.Get("/survey/ideologys", survey.GetIdeologys)
+
+	app.Post("/candidate", admin.MakePostCandidate(adminPassword))
 
 	app.Listen(":9999")
 }

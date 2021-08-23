@@ -40,12 +40,12 @@ const Candidate$json = const {
   '2': const [
     const {'1': 'Name', '3': 1, '4': 1, '5': 9, '10': 'Name'},
     const {'1': 'Markdown', '3': 2, '4': 1, '5': 9, '10': 'Markdown'},
-    const {'1': 'Error', '3': 3, '4': 1, '5': 9, '10': 'Error'},
+    const {'1': 'Password', '3': 3, '4': 1, '5': 9, '10': 'Password'},
   ],
 };
 
 /// Descriptor for `Candidate`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List candidateDescriptor = $convert.base64Decode('CglDYW5kaWRhdGUSEgoETmFtZRgBIAEoCVIETmFtZRIaCghNYXJrZG93bhgCIAEoCVIITWFya2Rvd24SFAoFRXJyb3IYAyABKAlSBUVycm9y');
+final $typed_data.Uint8List candidateDescriptor = $convert.base64Decode('CglDYW5kaWRhdGUSEgoETmFtZRgBIAEoCVIETmFtZRIaCghNYXJrZG93bhgCIAEoCVIITWFya2Rvd24SGgoIUGFzc3dvcmQYAyABKAlSCFBhc3N3b3Jk');
 @$core.Deprecated('Use list_Descriptor instead')
 const List_$json = const {
   '1': 'List',

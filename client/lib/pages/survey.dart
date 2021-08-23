@@ -37,6 +37,15 @@ class SurveyPage extends StatelessWidget {
                 SizedBox(
                   height: breakSize,
                 ),
+                Text(
+                  '해당 설문지 응답은 응답자를 특정할 수 있는 정보(응답자의 유권자 ID와 투표 용지 ID, 본인인증 때 사용한 정보)는 저장하지 않습니다.',
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+                SizedBox(
+                  height: breakSize,
+                ),
                 TextField(
                   keyboardType: TextInputType.number,
                   maxLength: 4,
@@ -131,6 +140,41 @@ class SurveyPage extends StatelessWidget {
                     ),
                     Text(
                       controller.survey.job,
+                      style: TextStyle(
+                        fontSize: fontSize,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: breakSize,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '귀하의 성별은 무엇니까?',
+                      style: TextStyle(
+                        fontSize: fontSize,
+                      ),
+                    ),
+                    PopupMenuButton<bool>(
+                      onSelected: (value) {
+                        controller.survey.gender = value;
+                        controller.update();
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Text('남'),
+                          value: true,
+                        ),
+                        PopupMenuItem(
+                          child: Text('여'),
+                          value: false,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      controller.survey.gender ? '남성' : '여성',
                       style: TextStyle(
                         fontSize: fontSize,
                       ),
@@ -372,6 +416,12 @@ class SurveyPage extends StatelessWidget {
                 ),
                 Text(
                   '설문조사에 응해주셔서 감사합니다.',
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+                Text(
+                  '제출하시면 설문조사 통계에 필요한 필수 내역 정보 제공에 동의함으로 간주합니다.',
                   style: TextStyle(
                     fontSize: fontSize,
                   ),

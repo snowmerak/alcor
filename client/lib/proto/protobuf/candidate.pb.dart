@@ -191,7 +191,7 @@ class Candidate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Candidate', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'candidate'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Name', protoName: 'Name')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Markdown', protoName: 'Markdown')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Error', protoName: 'Error')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Password', protoName: 'Password')
     ..hasRequiredFields = false
   ;
 
@@ -199,7 +199,7 @@ class Candidate extends $pb.GeneratedMessage {
   factory Candidate({
     $core.String? name,
     $core.String? markdown,
-    $core.String? error,
+    $core.String? password,
   }) {
     final _result = create();
     if (name != null) {
@@ -208,8 +208,8 @@ class Candidate extends $pb.GeneratedMessage {
     if (markdown != null) {
       _result.markdown = markdown;
     }
-    if (error != null) {
-      _result.error = error;
+    if (password != null) {
+      _result.password = password;
     }
     return _result;
   }
@@ -253,13 +253,13 @@ class Candidate extends $pb.GeneratedMessage {
   void clearMarkdown() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get error => $_getSZ(2);
+  $core.String get password => $_getSZ(2);
   @$pb.TagNumber(3)
-  set error($core.String v) { $_setString(2, v); }
+  set password($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasError() => $_has(2);
+  $core.bool hasPassword() => $_has(2);
   @$pb.TagNumber(3)
-  void clearError() => clearField(3);
+  void clearPassword() => clearField(3);
 }
 
 class List_ extends $pb.GeneratedMessage {

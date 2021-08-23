@@ -21,7 +21,7 @@ message Result {
 message Candidate {
     string Name = 1;
     string Markdown = 2;
-    string Error = 3;
+    string Password = 3;
 }
 
 message List {
