@@ -58,9 +58,9 @@ services:
         environment: 
             - MAX_CONNECTION=100000
             - EXPIRATION_TIME=120
+            - ADMIN_PASSWORD=password
         ports:
             - 9999:9999
-            - 10000:10000
         links: 
             - voters
             - papers
