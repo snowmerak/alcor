@@ -22,7 +22,7 @@ Future<void> submitSurvey() async {
       if (value.statusCode == 200) {
         await Get.defaultDialog(title: '제출하였습니다', middleText: '응답해 주셔서 감사합니다\n모든 데이터를 초기화합니다');
         await Hive.deleteFromDisk();
-        Get.offAndToNamed('/');
+        Get.offAllNamed('/');
       } else {
         await Get.defaultDialog(title: '제출에 실패하였습니다', middleText: value.statusCode.toString());
       }

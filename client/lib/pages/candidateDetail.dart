@@ -1,5 +1,4 @@
 import 'package:alcor/controllers/candidate.dart';
-import 'package:alcor/controllers/vote.dart';
 import 'package:alcor/service/candidate.dart';
 import 'package:alcor/service/vote.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class CandidateDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var voteController = Get.put(VoteController());
     var detailController = Get.find<CandidateDetailController>();
     getCandidate();
     return Scaffold(
@@ -31,10 +29,10 @@ class CandidateDetailPage extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      submitPaper();
-                    },
-                    child: Text('투표'),
+                  onPressed: () {
+                    submitPaper();
+                  },
+                  child: Text('투표'),
                 ),
                 SizedBox(
                   height: 24,
