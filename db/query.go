@@ -18,6 +18,27 @@ func SelectCandidate(ctx context.Context, candidate *Candidate) error {
 	return Voters.QueryOne(ctx, cmd, candidate, candidate.Name)
 }
 
+func UpdateCandidate(ctx context.Context, candidate *Candidate) error {
+	id := new([]ID)
+	cmd := `
+	update Candidate
+	filter Candidate.name = <str>$0
+	set {
+		markdown := <str>$1
+	}
+	`
+	return Voters.Query(ctx, cmd, id, candidate.Name, candidate.Markdown)
+}
+
+func DeleteCandidate(ctx context.Context, candidate *Candidate) error {
+	cmd := `
+	delete Candidate
+	filter Candidate.name = <str>$0
+	limit 1
+	`
+	return Voters.QueryOne(ctx, cmd, candidate, candidate.Name)
+}
+
 func SelectCandidates(ctx context.Context, candidates *[]Candidate) error {
 	cmd := `
 	select Candidate {
