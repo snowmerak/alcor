@@ -11,7 +11,6 @@ import (
 	"alcor/service/survey"
 	voter_info "alcor/service/voter/info"
 	"alcor/service/voter/register"
-	"context"
 	"os"
 	"strconv"
 	"time"
@@ -23,12 +22,6 @@ import (
 
 func main() {
 	db.Init()
-
-	// test code
-	db.InsertCandidate(context.Background(), &db.Candidate{
-		Name:     "이슬기",
-		Markdown: "## 나",
-	})
 
 	app := fiber.New()
 
@@ -51,7 +44,7 @@ func main() {
 		AllowHeaders:     "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
 		AllowCredentials: true,
 		AllowOrigins:     "*",
-		AllowMethods:     "GET, POST",
+		AllowMethods:     "GET, POST, DELETE, PATCH",
 	}))
 
 	app.Post("/handshake", security.Service)
@@ -81,6 +74,9 @@ func main() {
 	app.Get("/survey/ideologys", survey.GetIdeologys)
 
 	app.Post("/candidate", admin.MakePostCandidate(adminPassword))
+	app.Patch("/candidate", admin.MakePatchCandidate(adminPassword))
+	app.Delete("/candidate", admin.MakeDeleteCandidate(adminPassword))
+	app.Post("/admin", admin.MakeCheckPassword(adminPassword))
 
 	app.Listen(":9999")
 }
