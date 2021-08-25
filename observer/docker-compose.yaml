@@ -3,8 +3,8 @@ version: "3"
 services: 
     voters:
         image: edgedb/edgedb:1-beta2
-        # ports: 
-        #     - 16419:16419
+        ports: 
+            - 16419:16419
         restart: on-failure
         environment: 
             - EDGEDB_PASSWORD=test
@@ -24,26 +24,8 @@ services:
             - EDGEDB_PORT=16420
         networks: 
             - paperedge
-
-    sessions:
-        image: memcached:latest
-        restart: on-failure
-        networks:
-            - sessions
-
-    certcodes:
-        image: memcached:latest
-        restart: on-failure
-        networks:
-            - certcodes
-
-    keybytes:
-        image: memcached:latest
-        restart: on-failure
-        networks:
-            - keybytes
     
-    alcor:
+    alcor-observer:
         build:
             context: .
             network: host
@@ -53,30 +35,17 @@ services:
             - MAX_CONNECTION=100000
             - EXPIRATION_TIME=120
         ports:
-            - 9999:9999
-            - 10000:10000
+            - 10001:10001
         links: 
             - voters
             - papers
-            - sessions
-            - keybytes
-            - certcodes
         depends_on: 
             - voters
             - papers
-            - sessions
-            - keybytes
-            - certcodes
         networks:
             - voteredge
             - paperedge
-            - sessions
-            - keybytes
-            - certcodes
 
 networks:
     voteredge:
     paperedge:
-    sessions:
-    certcodes:
-    keybytes:

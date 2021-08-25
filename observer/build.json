@@ -1,0 +1,13 @@
+{
+  "bin_path": "bin",
+  "name": "alcor",
+  "target": {
+    "linux": [
+      "amd64"
+    ]
+  },
+  "gogc": 100,
+  "to_plugin": false,
+  "auto_run": false,
+  "module": true
+}
