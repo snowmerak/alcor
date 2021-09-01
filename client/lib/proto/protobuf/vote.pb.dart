@@ -58,12 +58,12 @@ class KeyBytes extends $pb.GeneratedMessage {
 
 class Paper extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Paper', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'vote'), createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'VoterId', $pb.PbFieldType.OY, protoName: 'VoterId')
-    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Timestamp', $pb.PbFieldType.OY, protoName: 'Timestamp')
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', $pb.PbFieldType.OY, protoName: 'Message')
-    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'RandomBytes', $pb.PbFieldType.OY, protoName: 'RandomBytes')
-    ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Hash', $pb.PbFieldType.OY, protoName: 'Hash')
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Signature', $pb.PbFieldType.OY, protoName: 'Signature')
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'VoterId', $pb.PbFieldType.OY, protoName: 'VoterId')
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Timestamp', $pb.PbFieldType.OY, protoName: 'Timestamp')
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Message', $pb.PbFieldType.OY, protoName: 'Message')
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'RandomBytes', $pb.PbFieldType.OY, protoName: 'RandomBytes')
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Hash', $pb.PbFieldType.OY, protoName: 'Hash')
+    ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Signature', $pb.PbFieldType.OY, protoName: 'Signature')
     ..hasRequiredFields = false
   ;
 
@@ -118,59 +118,59 @@ class Paper extends $pb.GeneratedMessage {
   static Paper getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Paper>(create);
   static Paper? _defaultInstance;
 
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
   $core.List<$core.int> get voterId => $_getN(0);
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
   set voterId($core.List<$core.int> v) { $_setBytes(0, v); }
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
   $core.bool hasVoterId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearVoterId() => clearField(1);
+
   @$pb.TagNumber(2)
-  void clearVoterId() => clearField(2);
-
-  @$pb.TagNumber(3)
   $core.List<$core.int> get timestamp => $_getN(1);
-  @$pb.TagNumber(3)
+  @$pb.TagNumber(2)
   set timestamp($core.List<$core.int> v) { $_setBytes(1, v); }
-  @$pb.TagNumber(3)
+  @$pb.TagNumber(2)
   $core.bool hasTimestamp() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTimestamp() => clearField(2);
+
   @$pb.TagNumber(3)
-  void clearTimestamp() => clearField(3);
-
-  @$pb.TagNumber(4)
   $core.List<$core.int> get message => $_getN(2);
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
   set message($core.List<$core.int> v) { $_setBytes(2, v); }
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
   $core.bool hasMessage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMessage() => clearField(3);
+
   @$pb.TagNumber(4)
-  void clearMessage() => clearField(4);
-
-  @$pb.TagNumber(5)
   $core.List<$core.int> get randomBytes => $_getN(3);
-  @$pb.TagNumber(5)
+  @$pb.TagNumber(4)
   set randomBytes($core.List<$core.int> v) { $_setBytes(3, v); }
-  @$pb.TagNumber(5)
+  @$pb.TagNumber(4)
   $core.bool hasRandomBytes() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRandomBytes() => clearField(4);
+
   @$pb.TagNumber(5)
-  void clearRandomBytes() => clearField(5);
-
-  @$pb.TagNumber(6)
   $core.List<$core.int> get hash => $_getN(4);
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(5)
   set hash($core.List<$core.int> v) { $_setBytes(4, v); }
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(5)
   $core.bool hasHash() => $_has(4);
-  @$pb.TagNumber(6)
-  void clearHash() => clearField(6);
+  @$pb.TagNumber(5)
+  void clearHash() => clearField(5);
 
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(6)
   $core.List<$core.int> get signature => $_getN(5);
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(6)
   set signature($core.List<$core.int> v) { $_setBytes(5, v); }
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(6)
   $core.bool hasSignature() => $_has(5);
-  @$pb.TagNumber(7)
-  void clearSignature() => clearField(7);
+  @$pb.TagNumber(6)
+  void clearSignature() => clearField(6);
 }
 
 class Result extends $pb.GeneratedMessage {
