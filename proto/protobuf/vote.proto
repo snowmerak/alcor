@@ -9,12 +9,12 @@ message KeyBytes {
 }
 
 message Paper {
-    bytes VoterId = 2;
-	bytes Timestamp = 3;
-	bytes Message = 4;
-	bytes RandomBytes = 5;
-	bytes Hash = 6;
-	bytes Signature = 7;
+    bytes VoterId = 1;
+	bytes Timestamp = 2;
+	bytes Message = 3;
+	bytes RandomBytes = 4;
+	bytes Hash = 5;
+	bytes Signature = 6;
 }
 
 message Result {
