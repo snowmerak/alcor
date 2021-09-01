@@ -73,6 +73,9 @@ func main() {
 	app.Get("/survey/house_types", survey.GetsHouseTypes)
 	app.Get("/survey/ideologys", survey.GetIdeologys)
 
+	app.Get("/survey/last_number", survey.GetLastNumber)
+	app.Get("/survey/:number", survey.GetIndex)
+
 	app.Post("/candidate", admin.MakePostCandidate(adminPassword))
 	app.Patch("/candidate", admin.MakePatchCandidate(adminPassword))
 	app.Delete("/candidate", admin.MakeDeleteCandidate(adminPassword))
