@@ -118,3 +118,12 @@ func GetIndex(c *fiber.Ctx) error {
 	c.SendStatus(fasthttp.StatusOK)
 	return c.Send(bs)
 }
+
+func GetLastNumber(c *fiber.Ctx) error {
+	data, err := rdb.GetSurveyIndex()
+	if err != nil {
+		data = 0
+	}
+	c.SendStatus(fasthttp.StatusOK)
+	return c.SendString(strconv.FormatUint(data, 10))
+}
