@@ -1,0 +1,31 @@
+@startuml client-register-class
+
+class Phone {
+    string Number
+    string Name
+    string RRN
+    bool Gender
+}
+
+Phone -right-> CertCode
+
+class CertCode {
+    bytes Code
+    bytes PublicKey
+}
+
+CertCode -right-> Result
+
+class Account {
+    bytes HashID
+    bytes PrivateKey
+}
+
+CertCode -right-> Account
+
+class Result {
+    bytes ID
+    string Error
+}
+
+@enduml

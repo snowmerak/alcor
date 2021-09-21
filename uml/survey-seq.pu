@@ -1,0 +1,13 @@
+@startuml survey-seq
+
+actor client
+actor alcor
+database voters
+
+client --> alcor: send survey
+alcor --> voters: get voter
+alcor --> alcor: already enrolled
+alcor --> voters: save survey
+alcor --> client: reply status
+
+@enduml

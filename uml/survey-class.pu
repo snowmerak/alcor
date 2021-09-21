@@ -1,0 +1,21 @@
+@startuml survey-class
+
+class Data {
+	string Candidate
+	bool Gender
+	int32 Age
+	string Region
+	string Job
+	string Education
+	bool Married
+	bool Divorced
+	bool HasCar
+	string HouseType
+	int32 Salary
+	bool HasDebt
+	string Ideology
+	bytes VoterID
+	int64 Number
+}
+
+@enduml

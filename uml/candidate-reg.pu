@@ -1,0 +1,26 @@
+@startuml candidate-reg
+
+actor admin
+actor alcor
+database voters
+
+group register candidate
+    admin --> alcor: request to register candidate
+    alcor --> voters: exist candidate
+    voters --> alcor: reply
+    alcor --> voters: register candidate
+end
+
+group edit candidate
+    admin --> alcor: request to edit candidate
+    alcor --> voters: exist candidate
+    voters --> alcor: reply
+    alcor --> voters: edit candidate
+end
+
+group remove candidate
+    admin --> alcor: request to remove candidate
+    alcor --> voters: remove candidate
+end
+
+@enduml

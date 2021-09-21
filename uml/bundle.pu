@@ -1,0 +1,21 @@
+@startuml bundle
+
+class PaperHash {
+    hash bytes
+}
+
+PaperHash -right-> RingBuffer
+
+class RingBuffer {
+    buffer [N]bytes
+}
+
+RingBuffer -right-> Bundle
+
+class Bundle {
+    hash bytes;
+	prev bytes;
+	sub_hashes [N]bytes;
+}
+
+@enduml

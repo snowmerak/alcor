@@ -1,0 +1,37 @@
+@startuml observer-get
+
+actor observer
+actor alcor
+collections rdb
+database papers
+database voters
+
+group get last bundle hash
+    observer --> alcor: request last bundle hash
+    alcor --> rdb: request last bundle hash
+    rdb --> alcor: reply last bundle hash
+    alcor --> observer: reply last bundle hash
+end
+
+group get bundle
+    observer --> alcor: request bundle
+    alcor --> papers: request bundle
+    papers --> alcor: reply bundle
+    alcor --> observer: reply bundle
+end
+
+group get paper
+    observer --> alcor: request paper
+    alcor --> papers: request paper
+    papers --> alcor: reply paper
+    alcor --> observer: reply paper
+end
+
+group get voter
+    observer --> alcor: request voter
+    alcor --> voters: request voter
+    voters --> alcor: reply voter
+    alcor --> observer: reply voter
+end
+
+@enduml

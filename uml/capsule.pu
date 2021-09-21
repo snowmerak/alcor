@@ -1,0 +1,8 @@
+@startuml capsule
+
+class Capsule {
+    ID: bytes
+    EncryptedData: bytes
+}
+
+@enduml

@@ -83,13 +83,14 @@ func Decapsulate(data []byte) (string, []byte, error) {
 }
 
 func Service(c *fiber.Ctx) error {
-	secret, pub, err := Handshake(c.Body())
+	cpk := c.Body()
+	secret, pub, err := Handshake(cpk)
 	if err != nil {
 		log.Println(err)
 		c.Response().Header.SetStatusCode(fasthttp.StatusBadRequest)
 		return c.Send([]byte(err.Error()))
 	}
-	hashed := sha512.Sum512(secret)
+	hashed := sha512.Sum512(cpk)
 	reply := new(security.Reply)
 	reply.ID = hex.EncodeToString(hashed[:])
 	reply.PublicKey = pub

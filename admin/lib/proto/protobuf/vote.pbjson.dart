@@ -22,17 +22,17 @@ final $typed_data.Uint8List keyBytesDescriptor = $convert.base64Decode('CghLZXlC
 const Paper$json = const {
   '1': 'Paper',
   '2': const [
-    const {'1': 'VoterId', '3': 2, '4': 1, '5': 12, '10': 'VoterId'},
-    const {'1': 'Timestamp', '3': 3, '4': 1, '5': 12, '10': 'Timestamp'},
-    const {'1': 'Message', '3': 4, '4': 1, '5': 12, '10': 'Message'},
-    const {'1': 'RandomBytes', '3': 5, '4': 1, '5': 12, '10': 'RandomBytes'},
-    const {'1': 'Hash', '3': 6, '4': 1, '5': 12, '10': 'Hash'},
-    const {'1': 'Signature', '3': 7, '4': 1, '5': 12, '10': 'Signature'},
+    const {'1': 'VoterId', '3': 1, '4': 1, '5': 12, '10': 'VoterId'},
+    const {'1': 'Timestamp', '3': 2, '4': 1, '5': 12, '10': 'Timestamp'},
+    const {'1': 'Message', '3': 3, '4': 1, '5': 12, '10': 'Message'},
+    const {'1': 'RandomBytes', '3': 4, '4': 1, '5': 12, '10': 'RandomBytes'},
+    const {'1': 'Hash', '3': 5, '4': 1, '5': 12, '10': 'Hash'},
+    const {'1': 'Signature', '3': 6, '4': 1, '5': 12, '10': 'Signature'},
   ],
 };
 
 /// Descriptor for `Paper`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List paperDescriptor = $convert.base64Decode('CgVQYXBlchIYCgdWb3RlcklkGAIgASgMUgdWb3RlcklkEhwKCVRpbWVzdGFtcBgDIAEoDFIJVGltZXN0YW1wEhgKB01lc3NhZ2UYBCABKAxSB01lc3NhZ2USIAoLUmFuZG9tQnl0ZXMYBSABKAxSC1JhbmRvbUJ5dGVzEhIKBEhhc2gYBiABKAxSBEhhc2gSHAoJU2lnbmF0dXJlGAcgASgMUglTaWduYXR1cmU=');
+final $typed_data.Uint8List paperDescriptor = $convert.base64Decode('CgVQYXBlchIYCgdWb3RlcklkGAEgASgMUgdWb3RlcklkEhwKCVRpbWVzdGFtcBgCIAEoDFIJVGltZXN0YW1wEhgKB01lc3NhZ2UYAyABKAxSB01lc3NhZ2USIAoLUmFuZG9tQnl0ZXMYBCABKAxSC1JhbmRvbUJ5dGVzEhIKBEhhc2gYBSABKAxSBEhhc2gSHAoJU2lnbmF0dXJlGAYgASgMUglTaWduYXR1cmU=');
 @$core.Deprecated('Use resultDescriptor instead')
 const Result$json = const {
   '1': 'Result',

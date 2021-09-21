@@ -1,0 +1,22 @@
+@startuml candidate-getlist
+
+actor client
+actor alcor
+database voters
+
+group get list 
+    client --> alcor: request candidate list
+    alcor --> voters: request all candidates
+    voters --> alcor: send all candidates
+    alcor --> alcor: tidy candidate list
+    alcor --> client: send candidate list
+end
+
+group get candidate
+    client --> alcor: request candidate
+    alcor --> voters: request candidate
+    voters --> alcor: send candidate
+    alcor --> client: send candidate
+end
+
+@enduml

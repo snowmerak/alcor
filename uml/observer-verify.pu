@@ -1,0 +1,34 @@
+@startuml observer-verify
+
+database papers
+database voters
+actor observer
+actor alcor
+
+group get last bundle
+    observer --> alcor: request last bundle hash
+    alcor --> observer: reply last bundle hash
+    alcor --> alcor: save last bundle hash
+end
+
+group [loop] until bundle is finished
+
+    observer --> alcor: request bundle
+    alcor --> observer: reply bundle
+
+    group [loop] range papers in bundle 
+        observer --> alcor: request paper
+        alcor --> observer: reply paper
+        observer --> alcor: request voter
+        alcor --> observer: reply voter
+        observer --> voters: save voter
+        observer --> observer: verify paper
+        observer --> papers: save paper
+    end
+    observer --> observer: verify bundle
+    observer --> papers: save bundle
+
+    observer --> observer: reference previous bundle hash
+end
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml vote
+
+actor client
+actor alcor
+collections keybytes
+database voters
+database papers
+
+group request
+    client --> alcor: request keybytes
+    alcor --> voters: request voter data
+    voters --> alcor: reply voer data
+    alcor --> alcor: check already voted
+    alcor --> keybytes: save keybytes
+    alcor --> client: reply keybytes
+end
+
+group register
+    client --> alcor: send paper
+    alcor --> keybytes: request keybytes
+    keybytes --> alcor: reply keybytes
+    alcor --> alcor: check keybytes is same
+    alcor --> alcor: check hash is same
+    alcor --> voters: request voter data
+    voters --> alcor: reply voter data
+    alcor --> alcor: verify paper signature
+    alcor --> papers: save paper
+    alcor --> client: reply status
+end
+
+@enduml

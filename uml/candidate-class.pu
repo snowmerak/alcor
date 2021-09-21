@@ -1,0 +1,14 @@
+@startuml candidate-class
+
+class List {
+    names []string
+}
+
+List *-right- Candidate
+
+class Candidate {
+    name string
+    markdown string
+}
+
+@enduml

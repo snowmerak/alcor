@@ -1,0 +1,15 @@
+@startuml candidate
+
+class Candidate {
+    name string
+    markdown string
+}
+
+Candidate -right-> Result
+
+class Result {
+    status int
+    err string
+}
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml sessions
+
+actor client
+actor alcor
+collections sessions
+
+client --> client: encrypt capsule
+client --> alcor: request and send capsule
+alcor --> sessions: request symmetric key with ID
+sessions --> alcor: send symmetric key
+alcor --> alcor: decrypt capsule
+alcor --> some_service: send data
+some_service --> alcor: reply data
+alcor --> alcor: encrypt capsule
+alcor --> client: reply status and send capsule
+client --> client: decrypt capsule
+
+@enduml

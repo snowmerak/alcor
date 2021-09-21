@@ -1,0 +1,11 @@
+@startuml handshake
+
+actor client
+actor alcor
+collections sessions
+
+client --> alcor: send publickey
+alcor --> sessions: create session
+alcor --> client: send id and publickey
+
+@enduml

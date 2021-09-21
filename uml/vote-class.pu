@@ -1,0 +1,25 @@
+@startuml vote-class
+
+class KeyBytes {
+    bytes Data
+}
+
+KeyBytes -right-> Paper
+
+class Paper {
+    bytes VoterId
+	bytes Timestamp
+	bytes Message
+	bytes RandomBytes
+	bytes Hash
+	bytes Signature
+}
+
+Paper -right-> Result
+
+class Result {
+    bool Ok
+    string Error
+}
+
+@enduml

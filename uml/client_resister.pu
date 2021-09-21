@@ -1,0 +1,25 @@
+@startuml client-register
+
+actor client
+actor alcor
+collections certcodes
+database voters
+
+group request phone certification code
+    client --> alcor: request certification
+    alcor --> voters: already registered?
+    voters --> alcor: reply
+    alcor --> certcodes: save certification code
+    alcor --> client: reply status
+end
+
+group request phone verification
+    client --> alcor: request verification
+    alcor --> certcodes: request certification code
+    certcodes --> alcor: reply certification code
+    alcor --> alcor: verification code
+    alcor --> voters: register voter
+    alcor --> client: reply status
+end
+
+@enduml

@@ -1,0 +1,57 @@
+@startuml total
+
+cloud client
+cloud admin
+cloud observer
+
+frame alcor {
+    node handshake
+    node voter
+    node paper
+    node candidate
+    node bundle
+    node survey
+}
+
+frame backend {
+    database voters
+    database papers
+
+    collections sessions
+    collections certcodes
+    collections keybytes
+    storage redis
+}
+
+client --> handshake
+client --> voter
+client --> paper
+client --> candidate
+client --> survey
+
+admin --> handshake
+admin --> candidate
+
+observer --> voter
+observer --> paper
+observer --> survey
+observer --> bundle
+
+voter --> sessions
+voter --> certcodes
+voter --> voters
+
+candidate --> sessions
+candidate --> voters
+
+paper --> sessions
+paper --> papers
+paper --> keybytes
+paper --> bundle
+
+bundle --> redis
+bundle --> papers
+
+survey --> voter
+
+@enduml

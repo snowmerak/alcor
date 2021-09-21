@@ -10,6 +10,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.17.0
 	github.com/lemon-mint/libuseful v1.0.4
 	github.com/snowmerak/jumper v0.0.1
+	github.com/snowmerak/wrapper v0.1.3 // indirect
 	github.com/valyala/fasthttp v1.28.0
 	google.golang.org/protobuf v1.27.1
 )

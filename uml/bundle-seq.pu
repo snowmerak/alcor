@@ -1,0 +1,22 @@
+@startuml bundle-seq
+
+actor Bundle
+actor RingBuffer
+collections Redis
+database Paper
+
+group loop
+    Bundle -> RingBuffer: push paper hash
+    RingBuffer -> RingBuffer: wait until pushed N number of paper hashes
+end
+
+group if pushed N number of paper hashes
+    RingBuffer -> Bundle: move paper hashes
+    Bundle -> Redis: request last bundle hash
+    Redis -> Bundle: return last bundle hash
+    Bundle -> Bundle: make bundle
+    Bundle -> Paper: enroll bundle
+    Bundle -> Redis: change last bundle hash
+end
+
+@enduml

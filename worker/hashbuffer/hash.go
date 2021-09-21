@@ -41,7 +41,7 @@ func NewRingError(data string) HashRingError {
 func Observe() {
 	prev, err := rdb.GetLastBundle()
 	if err != nil {
-		prev = []byte{}
+		prev = make([]byte, 32)
 	}
 	for {
 		list := make([][]byte, 8)
@@ -54,8 +54,7 @@ func Observe() {
 		for _, v := range bundle.SubHashes {
 			sha.Write(v)
 		}
-		hashed := sha512.Sum512(sha.Sum(nil))
-		bundle.Hash = hashed[:]
+		bundle.Hash = sha.Sum(nil)
 		if err := db.InsertBundle(context.Background(), bundle); err != nil {
 			jumper.Offer(NewRingError(err.Error()))
 			go func(list [][]byte) {
@@ -65,7 +64,7 @@ func Observe() {
 			}(list)
 			continue
 		}
-		rdb.SetLastBundle(hashed[:])
+		rdb.SetLastBundle(bundle.Hash)
 		prev = bundle.Prev
 	}
 }

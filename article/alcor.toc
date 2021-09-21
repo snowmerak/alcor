@@ -1,0 +1,23 @@
+\contentsline {section}{\numberline {1}서론}{3}{}%
+\contentsline {subsection}{\numberline {1.1}배경}{3}{}%
+\contentsline {subsection}{\numberline {1.2}목표 및 수단}{3}{}%
+\contentsline {section}{\numberline {2}본론}{4}{}%
+\contentsline {subsection}{\numberline {2.1}개발 내용}{4}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}서버 API 구조}{4}{}%
+\contentsline {subsection}{\numberline {2.2}서버 투표 기능 구현}{6}{}%
+\contentsline {subsubsection}{\numberline {2.2.1}서버 구현 도구}{6}{}%
+\contentsline {subsubsection}{\numberline {2.2.2}핸드셰이크}{7}{}%
+\contentsline {subsubsection}{\numberline {2.2.3}캡슐}{7}{}%
+\contentsline {subsubsection}{\numberline {2.2.4}유권자 등록}{8}{}%
+\contentsline {subsubsection}{\numberline {2.2.5}후보 조회}{9}{}%
+\contentsline {subsubsection}{\numberline {2.2.6}투표}{9}{}%
+\contentsline {subsubsection}{\numberline {2.2.7}번들링}{10}{}%
+\contentsline {subsubsection}{\numberline {2.2.8}설문조사 제출 구현}{11}{}%
+\contentsline {subsection}{\numberline {2.3}서버 관리자 기능 구현}{11}{}%
+\contentsline {subsubsection}{\numberline {2.3.1}후보 등록}{11}{}%
+\contentsline {subsubsection}{\numberline {2.3.2}후보 삭제}{12}{}%
+\contentsline {subsubsection}{\numberline {2.3.3}후보 수정}{12}{}%
+\contentsline {subsection}{\numberline {2.4}서버 관리자 설문조사 구현}{12}{}%
+\contentsline {subsection}{\numberline {2.5}옵저버 구현}{12}{}%
+\contentsline {subsubsection}{\numberline {2.5.1}}{12}{}%
+\contentsline {section}{\numberline {3}부록}{13}{}%
