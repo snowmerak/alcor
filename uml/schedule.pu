@@ -1,0 +1,27 @@
+@startuml schedule
+
+printscale weekly
+saturday are closed
+sunday are closed
+
+Project starts 2021-07-15
+
+[서버 설계] starts 2021-07-15 and lasts 7 days 
+[서버 모델 작성 및 DB 설정] starts 2021-07-20 and lasts 10 days
+[서버 구현] starts 2021-07-25 and lasts 35 days
+
+[클라이언트 설계] starts 2021-07-20 and lasts 10 days
+[클라이언트 구현] starts 2021-07-25 and lasts 45 days
+
+[관리자 앱 구현] starts 2021-09-05 and lasts 10 days
+[서버 관리가 API 구현] starts 2021-09-05 and lasts 3 days
+
+[옵저버 클라이언트 구현] starts 2021-09-20 and lasts 20 days
+[서버 옵저버 API 구현] starts 2021-09-20 and lasts 5 days
+
+[서버 통계 API 구현] starts 2021-09-25 and lasts 3 days
+[옵저버 통계 구현] starts 2021-10-10 and lasts 23 days
+
+[보고서 작성] starts 2021-09-20 and lasts 40 days
+
+@enduml

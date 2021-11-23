@@ -1,0 +1,25 @@
+@startuml server-method
+
+node docker
+
+node fiber
+database edgedb1
+database edgedb2
+collections memcached1
+collections memcached2
+collections redis
+
+docker -down-> fiber
+docker -down-> memcached1
+docker -down-> memcached2
+docker -down-> redis
+docker -down-> edgedb1
+docker -down-> edgedb2
+
+fiber <-right- memcached1
+fiber <-right- memcached2
+fiber <-right- redis
+fiber <-right- edgedb1
+fiber <-right- edgedb2
+
+@enduml

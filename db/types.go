@@ -51,7 +51,7 @@ type Data struct {
 	ID        edgedb.UUID `edgedb:"id"`
 	Candidate string      `edgedb:"candidate"`
 	Gender    bool        `edgedb:"gender"`
-	Age       int16       `edgedb:"age"`
+	Age       int32       `edgedb:"age"`
 	Region    string      `edgedb:"region"`
 	Job       string      `edgedb:"job"`
 	Education string      `edgedb:"education"`

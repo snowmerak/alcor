@@ -3,8 +3,8 @@ version: "3"
 services: 
     voters:
         image: edgedb/edgedb:1-beta2
-        ports: 
-            - 16419:16419
+        # ports: 
+        #     - 16419:16419
         restart: on-failure
         environment: 
             - EDGEDB_PASSWORD=test
@@ -32,8 +32,7 @@ services:
             dockerfile: ./dockerfile
         restart: on-failure
         environment: 
-            - MAX_CONNECTION=100000
-            - EXPIRATION_TIME=120
+            - URI=165.229.125.211
         ports:
             - 10001:10001
         links: 

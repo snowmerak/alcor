@@ -5,7 +5,6 @@ import (
 	"alcor/model/register"
 	"alcor/service/security"
 	"alcor/worker/certcodes"
-	"bytes"
 	"context"
 	"crypto/sha512"
 	"fmt"
@@ -95,14 +94,17 @@ func CertService(c *fiber.Ctx) error {
 	}
 
 	if result.Error == "" {
-		if !bytes.Equal(cache.Code, cert.Code) {
-			c.SendStatus(fasthttp.StatusBadRequest)
-			result.Error = "cert code is not valid"
-		} else {
-			hashed := sha512.Sum512(cert.PublicKey)
-			result.ID = hashed[:]
-			c.SendStatus(fasthttp.StatusOK)
-		}
+		// if !bytes.Equal(cache.Code, cert.Code) {
+		// 	c.SendStatus(fasthttp.StatusBadRequest)
+		// 	result.Error = "cert code is not valid"
+		// } else {
+		// 	hashed := sha512.Sum512(cert.PublicKey)
+		// 	result.ID = hashed[:]
+		// 	c.SendStatus(fasthttp.StatusOK)
+		// }
+		hashed := sha512.Sum512(cert.PublicKey)
+		result.ID = hashed[:]
+		c.SendStatus(fasthttp.StatusOK)
 	}
 
 	voter := new(db.Voter)

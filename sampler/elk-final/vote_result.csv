@@ -1,0 +1,25 @@
+candidate,gender,age,region,job,education,married,divorced,has_car,house_type,salary,has_debt,ideology
+julia,false,72,서울특별시,기타,대안학교 재학,true,false,true,순수 월세,23,true,현대 공화주의
+kotlin,true,78,경기도,법무사 및 집행관,대학원 재학,false,false,false,기타,76,true,현대 공화주의
+python,true,98,경기도,항공기 객실 승무원,대안학교 졸업,false,false,true,전세,23,false,보수 자유주의
+golang,true,28,충청남도,부동산 컨설턴트 및 중개사,없음,true,true,false,전세,29,true,신 자유주의
+java,true,96,경기도,기타 사육 관련 종사원,없음,false,true,false,전세,92,true,보수주의
+rust,false,52,부산광역시,철도 기관차 및 전동차 정비원,없음,true,false,false,보증부 월세,21,false,보수 자유주의
+rust,true,99,제주특별자치도,모피 및 가죽 의복 제조원,대학교 재학,false,false,false,순수 월세,66,false,국수주의
+python,true,73,서울특별시,"금형, 주조 및 단조원",초등학교 졸업,true,false,false,공동 소유,34,false,신 자유주의
+python,false,92,전라남도,감청 관련 전문가,초등학교 졸업,true,true,true,자가,46,false,아나키즘
+golang,true,46,서울특별시,곡물가공 제품 기계 조작원,없음,false,false,false,기타,77,false,고전 자유주의
+golang,false,52,충청남도,보험 및 금융 관리자,없음,true,true,true,보증부 월세,51,true,신 자유주의
+python,false,81,충청남도,상점 판매원,대학원 재학,true,true,true,전세,42,false,사회주의
+java,true,92,광주광역시,기타 서비스 관련 단순 종사원,대학원 재학,false,true,true,순수 월세,56,false,현대 자유주의
+golang,false,73,부산광역시,제관원 및 판조원,대학교 재학,true,false,false,자가,80,false,공산주의
+golang,true,88,서울특별시,소년원 학교 교사 및 교도관,대학원 재학,true,true,true,기타,78,true,고전 자유주의
+julia,true,63,세종특별자치시,환경공학 시험원,없음,true,true,false,자가,48,false,현대 공화주의
+java,false,57,울산광역시,문화 예술 관리자,대안학교 재학,true,false,false,전세,14,false,사회 자유주의
+julia,true,74,세종특별자치시,곡물가공 제품 기계 조작원,중학교 졸업,true,true,false,공동 소유,89,false,민주 사회주의
+kotlin,false,87,충청남도,전기공학 기술자 및 연구원,고등학교 재학,true,true,true,공동 소유,8,false,고전 자유주의
+java,false,85,경상남도,상하수도 처리 장치 조작원,없음,true,true,true,전세,56,true,공산주의
+dart,true,54,경상남도,조적공 및 석재 부설원,대학원 졸업,true,false,true,보증부 월세,9,true,신 자유주의
+python,true,65,세종특별자치시,통신 관련 장비 설치 및 수리원,대학원 재학,false,false,false,순수 월세,79,true,아나키즘
+java,false,95,울산광역시,건설 및 광업 단순 종사원,대학교 졸업,false,true,false,자가,54,false,현대 자유주의
+julia,true,55,대구광역시,기타 돌봄 및 보건 서비스 종사원,대학교 졸업,true,false,false,자가,53,false,보수 자유주의

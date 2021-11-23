@@ -1,0 +1,23 @@
+name: console_simple
+description: A simple command-line application.
+version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.14.2 <3.0.0'
+
+
+dependencies:
+  path: ^1.8.0
+  path_provider: ^2.0.2
+  ecdsa: ^0.0.4
+  elliptic: ^0.3.5
+  crypto: ^3.0.1
+  cryptography: ^2.0.2
+  protobuf: ^2.0.0
+  http: ^0.13.3
+  get: ^4.3.4
+  sync: ^0.3.0
+
+dev_dependencies:
+  lints: ^1.0.0

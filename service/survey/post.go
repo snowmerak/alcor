@@ -31,7 +31,7 @@ func PostService(c *fiber.Ctx) error {
 	}
 
 	statsdb := new(db.Data)
-	statsdb.Age = int16(stats.Age)
+	statsdb.Age = stats.Age
 	statsdb.Region = stats.Region
 	statsdb.Salary = int16(stats.Salary)
 	statsdb.Candidate = stats.Candidate

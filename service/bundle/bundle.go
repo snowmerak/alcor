@@ -23,14 +23,16 @@ func GetLast(c *fiber.Ctx) error {
 }
 
 func Get(c *fiber.Ctx) error {
-	data, err := base64.RawURLEncoding.DecodeString(c.Params("id", ""))
+	data, err := base64.URLEncoding.DecodeString(c.Params("id", ""))
 	if err != nil {
+		c.SendString(err.Error())
 		return c.SendStatus(fasthttp.StatusBadRequest)
 	}
 
 	bundle := new(db.Bundle)
 	bundle.Hash = data
-	if err != db.SelectBundle(context.Background(), bundle) {
+	if err := db.SelectBundle(context.Background(), bundle); err != nil {
+		c.SendString(err.Error())
 		return c.SendStatus(fasthttp.StatusNotFound)
 	}
 
@@ -40,6 +42,7 @@ func Get(c *fiber.Ctx) error {
 	bundlePB.SubHashes = bundle.SubHashes
 	data, err = proto.Marshal(bundlePB)
 	if err != nil {
+		c.SendString(err.Error())
 		return c.SendStatus(fasthttp.StatusConflict)
 	}
 

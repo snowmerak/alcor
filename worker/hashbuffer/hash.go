@@ -6,6 +6,8 @@ import (
 	"alcor/worker/rdb"
 	"context"
 	"crypto/sha512"
+	"encoding/hex"
+	"fmt"
 
 	"github.com/snowmerak/jumper"
 )
@@ -18,12 +20,6 @@ var buffer = ringbuffer.New(8)
 
 func EnQueue(hash []byte) {
 	buffer.EnQueue(hash)
-}
-
-func DeQueue(pool [][]byte) {
-	for i := 0; i < len(pool); i++ {
-		pool[i] = buffer.DeQueue()
-	}
 }
 
 type HashRingError struct {
@@ -45,7 +41,9 @@ func Observe() {
 	}
 	for {
 		list := make([][]byte, 8)
-		DeQueue(list)
+		for i := 0; i < 8; i++ {
+			list[i] = buffer.DeQueue()
+		}
 		bundle := new(db.Bundle)
 		bundle.Prev = prev
 		bundle.SubHashes = list
@@ -55,8 +53,11 @@ func Observe() {
 			sha.Write(v)
 		}
 		bundle.Hash = sha.Sum(nil)
+		hashed := sha512.Sum512(bundle.Hash)
+		bundle.Hash = hashed[:]
 		if err := db.InsertBundle(context.Background(), bundle); err != nil {
 			jumper.Offer(NewRingError(err.Error()))
+			fmt.Println(err)
 			go func(list [][]byte) {
 				for _, v := range list {
 					EnQueue(v)
@@ -64,7 +65,12 @@ func Observe() {
 			}(list)
 			continue
 		}
+		fmt.Println("inserted bundle: ", hex.EncodeToString(bundle.Hash))
+		fmt.Println("inserted bundle sub hashes: ")
+		for _, v := range bundle.SubHashes {
+			fmt.Println("- ", hex.EncodeToString(v))
+		}
 		rdb.SetLastBundle(bundle.Hash)
-		prev = bundle.Prev
+		prev = bundle.Hash
 	}
 }

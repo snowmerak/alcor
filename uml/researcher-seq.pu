@@ -1,0 +1,14 @@
+@startuml researcher-seq
+
+actor sampler
+actor alcor
+
+sampler -> alcor: request last survey number
+alcor -> sampler: reponse last number
+loop until survey number is 0
+    sampler -> alcor: request survey info for survey number
+    alcor -> sampler: reply survey info
+end
+sampler -> logstash: save survey info
+
+@enduml

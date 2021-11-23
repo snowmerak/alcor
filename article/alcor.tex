@@ -6,7 +6,7 @@
 %!TEX TS-program = xelatex
 %!TEX encoding = UTF-8 Unicode
 
-\documentclass[10pt,a4paper,left=15mm,right=15mm,top=20mm,bottom=20mm]{article}
+\documentclass[8pt,a4paper,left=8mm,right=8mm,top=10mm,bottom=10mm]{article}
 \usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
 \usepackage[hangul]{kotex}
 \usepackage{indentfirst}
@@ -16,6 +16,8 @@
 \usepackage{graphicx}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg}
 \usepackage{amssymb}
+
+\usepackage{listings}
 
 % Will Robertson's fontspec.sty can be used to simplify font choices.
 % To experiment, open /Applications/Font Book to examine the fonts provided on Mac OS X,
@@ -29,7 +31,7 @@
 \setmonofont[Scale=MatchLowercase]{D2Coding}
 
 \title{Alcor}
-\author{snowmerak}
+\author{yongmin}
 %\date{}                                           % Activate to display a given date or no date
 
 \begin{document}
@@ -64,9 +66,11 @@
 
 그래서 우리는 비트코인과 마찬가지로 실제 투표 용지 여러개를 묶어서 하나의 번들을 만든 후 이 번들을 블록으로 사용하는 방법을 차용하였다. 이 번들을 채우는 여러개의 투표 용지는 비동기로 처리된 요청들이 하나의 버퍼에 담기게 되고 일정 수가 충족되면 하나의 번들에 담겨서 체인 형태로 기록된다. 이렇게 되면 실제 락에 의해 정지되는 일순간과 버퍼를 비우고 등록하는 짧은 시간을 제외하면 비동기적으로 투표를 처리하는 것이 가능하게 된다.
 
-그리고 블록체인과 마찬가지로 타원 곡선 전자 서명 알고리즘을 활용하여 투표 용지를 검증할 수 있다. 일련의 과정은 블록체인과 동일하게 클라이언트에서 만든 키페어 중에서 공개키만 서버에 전송하고 투표 과정 중 서버는 공개키를 이용하여 검증을 한번 거치고, 이후 투표가 종료되면 모두에게 공개되어 누구나 투표 용지가 조작되지 않았는 지 검증할 수 있다.
+그리고 타원 곡선 전자 서명 알고리즘을 활용하여 투표 용지를 검증할 수 있다. 일련의 과정은 블록체인과 동일하게 클라이언트에서 만든 키페어 중에서 공개키만 서버에 전송하고 투표 과정 중 서버는 공개키를 이용하여 검증을 한번 거치고, 이후 투표가 종료되면 모두에게 공개되어 누구나 투표 용지가 조작되지 않았는 지 검증할 수 있다.
 
-마지막으로 누구나 어렵지 않게 투표 결과를 감시할 수 있게 하기 위해 서버에서 투표 용지와 유권자의 공개키, 번들 정보를 공개하는 API를 제공하여 별도의 클라이언트 프로그램을 통해 그래픽 유저 인터페이스를 이용하여 투표 과정과 결과를 감시할 수 있다. 이 클라이언트도 옵저버라는 이름으로 같이 제공할 것이다.
+또 누구나 어렵지 않게 투표 결과를 감시할 수 있게 하기 위해 서버에서 투표 용지와 유권자의 공개키, 번들 정보를 공개하는 API를 제공하여 별도의 클라이언트 프로그램을 통해 그래픽 유저 인터페이스를 이용하여 투표 과정과 결과를 감시할 수 있다. 이 클라이언트도 옵저버라는 이름으로 같이 제공할 것이다.
+
+마지막으로 투표의 결과를 시각화해 투표 선택지에 따른 유권자의 성향을 분석 할 수 있다. 투표 후 입력받은 유권자 설문조사를 통해 직업, 연령대, 소득 등을 기반으로 어떤 성향을 가진 인물이 어떤 후보군을 지지하는지 파악하는 등 대시보드를 통해 다양한 인사이트를 도출 할 수 있다. 이 과정은 ELK를 통해 제공할 것이다.
 
 \section{본론}
 
@@ -246,9 +250,107 @@
 
 \subsection{서버 관리자 설문조사 구현}
 
-\subsection{옵저버 구현}
+\subsection{옵저버 개표 구현}
 
-    \subsubsection{}
+    옵저버 구현의 전체적인 시퀸스 다이어그램은 부록의 <옵저버 시퀸스 다이어그램>에 등록되어 있다. 
+
+    \subsubsection{마지막 번들 해시}
+
+    옵저버는 서버의 /bundle 라우트에 GET 요청을 하여 마지막에 만들어져 DB에 저장된 번들의 해시를 받을 수 있다. 이 값을 기반으로 옵저버는 모든 번들을 순회할 수 있다.
+
+    \subsubsection{번들 순회 및 검증}
+
+    옵저버는 서버에게서 받은 마지막 번들 해시를 시작으로 현재 번들의 값을 서버의 /bundle/:id 라우트에 GET 요청을 통해 받아서 유효성을 검증할 수 있다. 시퀸스 다이어그램에 그려져 있듯이 내부에 등록된 투표 내역의 검증은 내부 반복 스코프에서 수행되고 있다. 만약 모든 투표 내역에 문제가 없다면 서버에서 했듯이 투표 내역의 해시를 모아서 번들의 해시로 만들어 올바른지 검증한 후 문제가 없다면 DB에 등록한다.
+
+    \subsubsection{투표 내역 조회 및 검증}
+
+    번들의 내부에 등록된 투표 내역을 순회한다. 이 과정에서 서버의 /paper/info/:id 에 GET 요청을 하여 투표 내역의 자세한 정보를 얻을 수 있다. 투표 내역을 얻으면 서버에서 투표 내역을 등록할 때 했듯이 모든 값을 해싱하여 기 등록된 투표 내역의 해시와 비교하여 검증한다.
+
+    \subsubsection{후보자 정보 검증}
+
+    투표 내역을 조회하고 검증하기 전에 투표 내역에 조작을 방지하기 위해 넣어놓은 후보자 정보를 조회하고 검증한다. 후보자 정보는 서버의 /voter/info/:id 라우트에 GET 요청을 하여 얻을 수 있다. 받아온 후보자 정보에서 투표 일자, 임의의 바이트 버퍼를 가져와서 투표 내역의 그것과 비교하여 동일한지 검증한다. 
+
+\subsection{샘플러 구현}
+
+    \begin{figure}[h]
+        \begin{center}
+            \includegraphics[width=10cm]{researcher-seq}
+            \caption{리서치 시퀸스 다이어그램}
+        \end{center}
+    \end{figure}
+
+    \subsubsection{마지막 설문조사 번호}
+    
+    서버의 /survey/lastnumber 라우트에 GET 요청을 하여 마지막으로 등록된 설문조사 번호를 받아올 수 있다. 이 번호는 번들 순회처럼 모든 설문조사를 받아오는 데 쓰이게 된다.
+
+    \subsubsection{설문조사 조회}
+
+    서버의 /survey/:number 라우트에 GET 요청을 하여 해당 번호에 해당하는 설문조사 정보를 받을 수 있다. 받아온 정보를 voters 데이터베이스에 등록하고 전처리 가공을 한다.
+
+    \subsubsection{설문조사 결과}
+
+    모든 설문조사를 순회하면 마지막으로 준비된 웹페이지를 렌더링하여 사용자에게 간단한 통계를 보여주고 필요시 설문조사 결과를 지정된 형식으로 저장한다. CSV 파일로 제공되며 각 항목의 인덱스 값이 아닌 해당 값 그대로 저장한다. ELK에서 저장된 CSV 파일을 가공해 인덱스를 생성한다. 생성된 인덱스는 Elasticsearch 내에 저장되며 위 인덱스를 기반으로 Kibana를 통해 시각화를 수행한다.
+
+\subsection{구현 수단}
+    \subsubsection{데이터 모델}
+
+    데이터베이스는 포스트그레스큐엘 기반의 RDB이면서 NoSQL처럼 다룰 수 있게 설계된 EdgeDB를 이용하고 각 프로그램 별 통신 수단으로 범용성과 사용성이 좋은 프로토콜 버퍼를 사용한다. 
+
+    \subsubsection{서버}
+
+    \begin{figure}[h]
+        \begin{center}
+            \includegraphics[width=14cm]{server-method}
+            \caption{서버 구성 다이어그램}
+        \end{center}
+    \end{figure}
+
+    서버는 한번에 많은 요청을 신뢰성있게 동시적으로 빠르게 처리해야하므로 고 언어와 FastHTTP 기반의 파이버 프레임워크를 사용한다. 그리고 데이터베이스로 EdgeDB 2개를 사용하여 유권자 정보와 투표 내역을 저장한다. 마지막으로 캐시를 저장할 memcached와 redis가 각각 2개, 1개를 구성하고, 이를 도커 컴포즈로 배포한다.
+
+    \subsubsection{옵저버}
+
+    \begin{figure}[h]
+        \begin{center}
+            \includegraphics[width=6cm]{observer-method}
+            \caption{옵저버 구성 다이어그램}
+        \end{center}
+    \end{figure}
+
+    옵저버는 서버의 도커 컴포즈를 그대로 사용하지만 memcached 2개와 redis 하나가 빠지게 되어 고 언어로 짜여진 HTTP 리퀘스트를 위한 부분 하나와 EdgeDB 2개만 사용한다. 
+
+    \subsubsection{샘플러}
+
+    \begin{figure}[h]
+        \begin{center}
+            \includegraphics[width=8cm]{sampler-method}
+            \caption{샘플러 구성 다이어그램}
+        \end{center}
+    \end{figure}
+
+    \begin{enumerate}
+        \item sampler
+            서버에서 설문조사 자료를 가져오기 위해 파이썬으로 작성된 스크립트를 사용한다. 이 스크립트는 받아온 설문조사를 아래 ELK가 읽을 수 있는 위치에 CSV 파일로 결과를 저장한다.
+        \item ELK
+            시각화는 빠르게 데이터를 집계해야하고 추가 데이터 발생시 이를 집계에 반영할 수 있어야 하기에 빠른 시각화와 인덱싱을 제공하는 ELK를 사용한다. ELK는 Elasticsearch,Logstash,kibana를 하나의 도커 컴포즈로 배포한다. Elasticsearch는 가공된 데이터를 인덱싱하고 Kibana에서 시각화를 요청한 데이터를 집계하는 역할을 하고, Logstash는 생성된 CSV파일을 Elasticsearch에서 인덱싱이 가능한 형태로 데이터를 가공한다. 또한 Kibana는 Elasticsearch, Logstash의 상태를 실시간으로 모니터링하고 대시보드에서 직접 시각화를 수행하는 역할을 한다.
+    \end{enumerate}
+
+    \subsubsection{클라이언트, 관리자}
+
+    클라이언트와 관리자는 가능하면 다양한 플랫폼을 지원하기위해 크로스플랫폼 프레임워크를 고려하였다. 자바스크립트 기반으로 작성된 일렉트론과 리액트 네이티브와 다트 기반으로 작성된 플러터가 최종 후보가 되었고 더 사용성이 높은 암호화 라이브러리와 언어의 사용성, 프레임워크의 전망을 고려하여 플러터를 선택하였다.
+
+\subsection{구현 일정}
+
+    \begin{figure}[h]
+        \begin{center}
+            \includegraphics[width=10cm]{schedule}
+            \caption{구현 일정}
+        \end{center}
+    \end{figure}
+
+\newpage
+\section{결과}
+
+\subsection{}
 
 \newpage
 \section{부록}
@@ -312,14 +414,14 @@
     \begin{figure}[h]
         \begin{center}
             \includegraphics[width=13cm]{observer-get.png}
-            \caption{후보 시퀸스 다이어그램}
+            \caption{결과 조회 시퀸스 다이어그램}
         \end{center}
     \end{figure}
 
     \begin{figure}[h]
         \begin{center}
             \includegraphics[height=17cm]{observer-verify.png}
-            \caption{후보 시퀸스 다이어그램}
+            \caption{옵저버 시퀸스 다이어그램}
         \end{center}
     \end{figure}
 

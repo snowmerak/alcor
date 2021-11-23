@@ -1,4 +1,5 @@
 import 'package:alcor/controllers/config.dart';
+import 'package:alcor/controllers/vote.dart';
 import 'package:alcor/service/handshake.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class Index extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final configController = Get.put(ConfigController());
+    Get.put(VoteController());
     return Scaffold(
       appBar: AppBar(
         title: Text('서버 연결'),

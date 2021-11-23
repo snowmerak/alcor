@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"alcor/model/auth"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
@@ -11,7 +12,7 @@ import (
 )
 
 func SerializePrivateKey(pr *ecdsa.PrivateKey) ([]byte, error) {
-	prpb := new(PrivateKey)
+	prpb := new(auth.PrivateKey)
 	return proto.Marshal(prpb)
 }
 
@@ -20,7 +21,7 @@ func DeserializePrivateKey(bs []byte) (*ecdsa.PrivateKey, error) {
 	if err != nil {
 		return nil, err
 	}
-	prpb := new(PrivateKey)
+	prpb := new(auth.PrivateKey)
 	if err := proto.Unmarshal(bs, prpb); err != nil {
 		return nil, err
 	}
@@ -34,7 +35,7 @@ func DeserializePrivateKey(bs []byte) (*ecdsa.PrivateKey, error) {
 }
 
 func SerializePublicKey(pb *ecdsa.PublicKey) ([]byte, error) {
-	pbpb := new(PublicKey)
+	pbpb := new(auth.PublicKey)
 	pbpb.X = pb.X.Text(16)
 	pbpb.Y = pb.Y.Text(16)
 	return proto.Marshal(pbpb)
@@ -46,7 +47,7 @@ func DeserializePublicKey(bs []byte) (*ecdsa.PublicKey, error) {
 		return nil, err
 	}
 	pb := pr.PublicKey
-	pbpb := new(PublicKey)
+	pbpb := new(auth.PublicKey)
 	if err := proto.Unmarshal(bs, pbpb); err != nil {
 		return nil, err
 	}
@@ -60,7 +61,7 @@ func DeserializePublicKey(bs []byte) (*ecdsa.PublicKey, error) {
 }
 
 func SerializeSignature(r *big.Int, s *big.Int) ([]byte, error) {
-	sig := &Signature{
+	sig := &auth.Signature{
 		R: r.Text(16),
 		S: s.Text(16),
 	}
@@ -68,7 +69,7 @@ func SerializeSignature(r *big.Int, s *big.Int) ([]byte, error) {
 }
 
 func DeserializeSignature(data []byte) (*big.Int, *big.Int, error) {
-	sig := new(Signature)
+	sig := new(auth.Signature)
 	if err := proto.Unmarshal(data, sig); err != nil {
 		return nil, nil, err
 	}

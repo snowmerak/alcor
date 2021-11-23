@@ -1,0 +1,16 @@
+@startuml sampler-method
+
+node python
+node docker
+queue logstash
+storage elasticsearch
+usecase kibana
+
+python -right-> docker
+docker -down-> logstash
+docker -down-> elasticsearch
+docker -down-> kibana
+logstash -right-> elasticsearch
+elasticsearch -right-> kibana
+
+@enduml

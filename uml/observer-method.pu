@@ -1,0 +1,16 @@
+@startuml observer-method
+
+node docker
+
+node go
+database edgedb1
+database edgedb2
+
+docker -down-> go
+docker -down-> edgedb1
+docker -down-> edgedb2
+
+go <-right- edgedb1
+go <-right- edgedb2
+
+@enduml

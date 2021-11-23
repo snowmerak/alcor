@@ -12,7 +12,7 @@ import (
 )
 
 func GetService(c *fiber.Ctx) error {
-	id, err := base64.RawURLEncoding.DecodeString(c.Params("id", ""))
+	id, err := base64.URLEncoding.DecodeString(c.Params("id", ""))
 	if err != nil {
 		return c.SendStatus(fasthttp.StatusBadRequest)
 	}

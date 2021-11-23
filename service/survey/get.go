@@ -98,7 +98,7 @@ func GetIndex(c *fiber.Ctx) error {
 		return c.SendStatus(fasthttp.StatusBadRequest)
 	}
 	survey := new(stats.Data)
-	survey.Age = int32(data.Age)
+	survey.Age = data.Age
 	survey.Candidate = data.Candidate
 	survey.Divorced = data.Divorced
 	survey.Education = data.Education

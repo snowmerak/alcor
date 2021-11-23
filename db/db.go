@@ -128,7 +128,7 @@ func Init() {
 			create required property number -> int64;
 			create property candidate -> str;
 			create property gender -> bool;
-			create property age -> int16;
+			create property age -> int32;
 			create property region -> str;
 			create property job -> str;
 			create property education -> str;

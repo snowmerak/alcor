@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:admin/controller/candidate.dart';
 import 'package:admin/controller/index.dart';
@@ -61,6 +60,7 @@ Future<void> getCandidate() async {
 
   var name =
       base64Url.encode(utf8.encoder.convert(candidateDetailController.name));
+  print(name);
 
   get(Uri.parse('http://${indexController.domain}:9999/candidate/$name'))
       .then((value) async {

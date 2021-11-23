@@ -12,6 +12,7 @@ import (
 	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha256"
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -152,7 +153,10 @@ func SubmitService(c *fiber.Ctx) error {
 		return c.Send([]byte(err.Error()))
 	}
 
-	go func() { hashbuffer.EnQueue(paper.Hash) }()
+	go func() {
+		fmt.Println("inserted: ", paper.Hash)
+		hashbuffer.EnQueue(paper.Hash)
+	}()
 
 	c.SendStatus(fasthttp.StatusOK)
 

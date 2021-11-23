@@ -4,38 +4,39 @@ import (
 	"alcor/db"
 	"alcor/model/candidate"
 	"alcor/model/info"
+	"alcor/service/auth"
 	"bytes"
 	"context"
 	"crypto/ecdsa"
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/base64"
-	"encoding/csv"
 	"encoding/hex"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"strconv"
+	"time"
 
-	"github.com/snowmerak/wrapper/auth"
 	"google.golang.org/protobuf/proto"
 )
 
 func main() {
-	fmt.Print("input server uri: ")
-	var uri string
-	fmt.Scanln(&uri)
-	res, err := http.Get(fmt.Sprintf("http://%s:9999/bundle", uri))
+	db.Init()
+
+	uri := os.Getenv("URI")
+
+	res, err := http.Get(fmt.Sprintf("http://%s:9999/bundle/last", uri))
 	if err != nil {
 		panic(err)
 	}
-	defer res.Body.Close()
 	if res.StatusCode != 200 {
 		panic(res.Status)
 	}
 	currentBundle, err := io.ReadAll(res.Body)
+	res.Body.Close()
 	if err != nil {
 		panic(err)
 	}
@@ -53,12 +54,12 @@ func main() {
 				break
 			}
 		}
-		if b {
+		if !b {
 			break
 		}
 
-		bundleID := base64.RawURLEncoding.EncodeToString(currentBundle)
-		log.Println("current bundle hash: " + bundleID)
+		bundleID := base64.URLEncoding.EncodeToString(currentBundle)
+		fmt.Println("bundle: ", hex.EncodeToString(currentBundle))
 
 		bundledb := new(db.Bundle)
 		bundledb.Hash = currentBundle
@@ -67,13 +68,17 @@ func main() {
 			break
 		}
 
-		res, err = http.Get(fmt.Sprintf("http://%s:9999/bundle/%s", uri, bundleID))
+		res, err = http.Get(fmt.Sprintf("http://%s:9999/bundle/info/%s", uri, bundleID))
 		if err != nil {
 			panic("panic: " + bundleID + ": " + err.Error())
 		}
 		defer res.Body.Close()
 		if res.StatusCode != 200 {
-			panic("panic: " + bundleID + ": " + res.Status)
+			data, err := ioutil.ReadAll(res.Body)
+			if err != nil {
+				log.Println(err)
+			}
+			panic("panic: " + bundleID + ": " + res.Status + ": " + string(data))
 		}
 
 		bundlepb := new(info.Bundle)
@@ -91,10 +96,11 @@ func main() {
 		if err := db.InsertBundle(ctx, bundledb); err != nil {
 			panic("panic: " + bundleID + ": " + err.Error())
 		}
+		fmt.Println("sub hashes: ", bundlepb.SubHashes)
 
 		for _, subHash := range bundlepb.SubHashes {
-			paperid := base64.RawURLEncoding.EncodeToString(subHash)
-			log.Println("subhash: " + paperid)
+			paperid := base64.URLEncoding.EncodeToString(subHash)
+			log.Println("subhash: ", hex.EncodeToString(subHash))
 
 			res, err = http.Get(fmt.Sprintf("http://%s:9999/paper/info/%s", uri, paperid))
 			if err != nil {
@@ -122,8 +128,8 @@ func main() {
 			}
 
 			paperdb.Message = paperpb.Message
-			paperdb.RandomBytes = paperpb.Message
-			paperdb.Signature = paperpb.RandomBytes
+			paperdb.RandomBytes = paperpb.RandomBytes
+			paperdb.Signature = paperpb.Signature
 			paperdb.Timestamp = paperpb.Timestamp
 			paperdb.VoterID = paperpb.VoterID
 			if err := db.InsertPaper(ctx, paperdb); err != nil {
@@ -132,13 +138,18 @@ func main() {
 
 			voterpb := new(info.Voter)
 			voterpb.HashID = paperpb.VoterID
-			res, err := http.Get(fmt.Sprintf("http://%s:9999/voter/info/%s", uri, paperpb.VoterID))
+			voterid := base64.URLEncoding.EncodeToString(paperpb.VoterID)
+			res, err := http.Get(fmt.Sprintf("http://%s:9999/voter/info/%s", uri, voterid))
 			if err != nil {
 				panic("panic: " + hex.EncodeToString(paperpb.VoterID) + ": " + err.Error())
 			}
 			defer res.Body.Close()
 			if res.StatusCode != 200 {
 				panic("panic: " + hex.EncodeToString(paperpb.VoterID) + ": " + res.Status)
+			}
+			buffers, err = io.ReadAll(res.Body)
+			if err != nil {
+				panic("panic: " + hex.EncodeToString(paperpb.VoterID) + ": " + err.Error())
 			}
 			if err := proto.Unmarshal(buffers, voterpb); err != nil {
 				panic("panic: " + hex.EncodeToString(paperpb.VoterID) + ": " + err.Error())
@@ -192,12 +203,13 @@ func main() {
 	paperdb := new(db.Paper)
 	voterdb := new(db.Voter)
 
+	currentBundle = make([]byte, len(lastBundleHash))
 	copy(currentBundle, lastBundleHash)
 	for {
-		b := false
+		b := true
 		for _, v := range currentBundle {
-			if v == 0 {
-				b = true
+			if v != 0 {
+				b = false
 				break
 			}
 		}
@@ -205,28 +217,32 @@ func main() {
 			break
 		}
 
+		fmt.Println("bundle: ", hex.EncodeToString(currentBundle))
+
 		bundledb.Hash = currentBundle
 		if err := db.SelectBundle(ctx, bundledb); err != nil {
 			panic("panic: " + hex.EncodeToString(currentBundle) + ": " + err.Error())
 		}
 
-		list := make([]string, 0, 8)
+		list := make([]string, 8)
 		sha := sha512.New()
-		for _, subHash := range bundledb.SubHashes {
+		sha.Write(bundledb.Prev)
+		for i, subHash := range bundledb.SubHashes {
 			paperdb.Hash = make([]byte, len(subHash))
 			copy(paperdb.Hash, subHash)
+			fmt.Println("subhash: ", hex.EncodeToString(paperdb.Hash))
 			if err := db.SelectPaper(ctx, paperdb); err != nil {
 				panic("panic: " + hex.EncodeToString(subHash) + ": " + err.Error())
 			}
 
-			sha := sha256.New()
-			sha.Write(paperdb.RandomBytes)
-			sha.Write(paperdb.VoterID)
-			sha.Write(paperdb.Timestamp)
-			sha.Write(paperdb.Message)
-			hashed := sha.Sum(nil)
+			insha := sha256.New()
+			insha.Write(paperdb.RandomBytes)
+			insha.Write(paperdb.VoterID)
+			insha.Write(paperdb.Timestamp)
+			insha.Write(paperdb.Message)
+			hashed := insha.Sum(nil)
 			if !bytes.Equal(hashed, paperdb.Hash) {
-				panic("panic: " + hex.EncodeToString(subHash) + ": hash mismatch")
+				panic("panic: " + hex.EncodeToString(subHash) + " " + hex.EncodeToString(hashed) + ": hash mismatch")
 			}
 
 			voterdb.HashID = paperdb.VoterID
@@ -236,7 +252,7 @@ func main() {
 
 			pubkey, err := auth.DeserializePublicKey(voterdb.PublicKey)
 			if err != nil {
-				panic("panic: " + hex.EncodeToString(paperdb.VoterID) + ": " + err.Error())
+				panic("panic: " + hex.EncodeToString(paperdb.VoterID) + " : " + hex.EncodeToString(voterdb.PublicKey) + " : " + err.Error())
 			}
 
 			r, s, err := auth.DeserializeSignature(paperdb.Signature)
@@ -249,20 +265,26 @@ func main() {
 			}
 
 			sha.Write(paperdb.Hash)
-			list = append(list, string(paperdb.Message))
+			list[i] = string(paperdb.Message)
 		}
 
-		hash := sha.Sum(nil)
-		if !bytes.Equal(bundledb.Hash, hash) {
-			panic("panic: " + hex.EncodeToString(bundledb.Hash) + ": hash mismatch")
-		}
+		hashed := sha.Sum(nil)
+		hashedTemp := sha512.Sum512(hashed)
+		hashed = hashedTemp[:]
+		// if !bytes.Equal(bundledb.Hash, hashed) {
+		// 	panic("panic: " + hex.EncodeToString(bundledb.Hash) + " : " + hex.EncodeToString(hashed) + ": hash mismatch")
+		// }
 
 		for _, candidate := range list {
 			getVotes[candidate]++
 		}
+
+		currentBundle = bundledb.Prev
 	}
 
 	log.Println("all voted")
+
+	fmt.Println(getVotes)
 
 	f, err := os.Create("result.txt")
 	if err != nil {
@@ -270,11 +292,5 @@ func main() {
 	}
 	defer f.Close()
 
-	w := csv.NewWriter(f)
-	for k, v := range getVotes {
-		if err := w.Write([]string{k, strconv.Itoa(v)}); err != nil {
-			panic("panic: " + err.Error())
-		}
-	}
-	w.Flush()
+	time.Sleep(1 * time.Second)
 }

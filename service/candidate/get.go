@@ -37,7 +37,7 @@ func GetService(c *fiber.Ctx) error {
 
 func GetAService(c *fiber.Ctx) error {
 	cd := new(db.Candidate)
-	body, err := base64.RawURLEncoding.DecodeString(c.Params("name", ""))
+	body, err := base64.StdEncoding.DecodeString(c.Params("name", ""))
 	if err != nil {
 		log.Println(err)
 		c.SendStatus(fasthttp.StatusBadRequest)

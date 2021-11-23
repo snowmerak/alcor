@@ -159,10 +159,10 @@ func InsertEnrolled(ctx context.Context, enrolled *Enrolled) error {
 func SelectPaper(ctx context.Context, paper *Paper) error {
 	cmd := `
 	select Paper {
-		id,
 		voter_id,
 		timestamp,
 		message,
+		random_bytes,
 		signature,
 		hash,
 	}
@@ -189,9 +189,9 @@ func InsertPaper(ctx context.Context, paper *Paper) error {
 
 func SelectBundle(ctx context.Context, bundle *Bundle) error {
 	cmd := `
-	select Paper {
+	select Bundle {
 		hash,
-		step,
+		prev,
 		sub_hashes,
 	}
 	filter Bundle.hash = <bytes>$0
@@ -205,7 +205,7 @@ func InsertBundle(ctx context.Context, bundle *Bundle) error {
 	cmd := `
 	insert Bundle {
 		hash := <bytes>$0,
-		step := <bytes>$1,
+		prev := <bytes>$1,
 		sub_hashes := <array<bytes>>$2,
 	}
 	`
@@ -250,7 +250,7 @@ func InsertData(ctx context.Context, data *Data) error {
 		number := <int64>$13,
 		candidate := <str>$0,
 		gender := <bool>$1,
-		age := <int16>$2,
+		age := <int32>$2,
 		region := <str>$3,
 		job := <str>$4,
 		education := <str>$5,
